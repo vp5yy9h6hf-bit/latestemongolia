@@ -1,0 +1,2452 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+<meta name="theme-color" content="#0066FF"/>
+<link rel="apple-touch-icon" href="/favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon.png"/>
+<link rel="apple-touch-icon-precomposed" href="/favicon.png"/>
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon.png"/>
+<link rel="icon" type="image/png" href="/favicon.png"/>
+<link rel="manifest" href="manifest.json"/>
+<meta name="apple-mobile-web-app-title" content="e-Mongolia"/>
+<title>e-Mongolia</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--blue:#0066FF;--bg:#EEF3FA;--text:#1A1A2E;--muted:#94a3b8}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;background:#111;color:var(--text);min-height:100dvh;display:flex;justify-content:center;overflow-x:hidden;margin:0;padding:0;overflow:hidden;-webkit-font-smoothing:antialiased}
+.phone{width:100%;max-width:430px;height:100dvh;background:var(--bg);position:relative;overflow:hidden;display:flex;flex-direction:column;margin:0 auto}
+
+/* PIN */
+#pin{position:absolute;inset:0;z-index:100;background:#E8F4FF;display:flex;flex-direction:column;align-items:center;padding:48px 20px 24px}
+#pin.hid{display:none}
+.pt{text-align:center;font-size:17px;font-weight:500;line-height:1.45;margin-top:40px;margin-bottom:28px}
+.pd{display:flex;gap:10px;margin-bottom:24px}
+.pdo{width:42px;height:42px;border-radius:12px;background:#e8eef5;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600;border:2px solid transparent}
+.pdo.on{border-color:var(--blue);background:#fff}
+.pdo.f{background:#fff;border-color:#e5e7eb}
+.pl{text-align:center;margin-bottom:28px}
+.pl button{display:block;background:none;border:none;color:#6b7280;font-size:14px;margin:8px auto;cursor:pointer}
+.sk{background:var(--blue)!important;color:#fff!important;padding:10px 22px;border-radius:999px;font-weight:500;margin-top:12px!important}
+.bb{display:flex;gap:10px;width:100%;max-width:360px;margin-top:auto;margin-bottom:12px}
+.sos{background:#ef4444;color:#fff;border:none;border-radius:12px;padding:14px 16px;font-weight:600;font-size:14px;cursor:pointer}
+.face{flex:1;background:var(--blue);color:#fff;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:500;cursor:pointer}
+.kp{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;width:100%;max-width:360px}
+.k{background:#eef2f7;border:none;border-radius:14px;height:52px;font-size:22px;font-weight:500;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.k:active{background:#dbe4f0}
+.k small{font-size:9px;color:#9ca3af;margin-top:1px}
+.k.em{background:transparent;cursor:default}
+.k.bk{background:#d1d5db;font-size:16px}
+
+/* HEADER */
+.hd{background:transparent;padding:12px 16px 8px;padding-top:max(12px,env(safe-area-inset-top));display:flex;align-items:center;justify-content:space-between;flex-shrink:0;position:relative;z-index:5}
+.logo{display:flex;align-items:center;gap:6px}
+.lb{background:#fff;color:#E31C23;width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:21px;flex-shrink:0;border:2.5px solid #1a2744;line-height:1;padding:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif}
+.lt{display:flex;flex-direction:column;justify-content:center;gap:0}
+.ln{font-size:23px;font-weight:700;color:#0066FF;letter-spacing:-.5px;line-height:1.05}
+.lt{display:flex;flex-direction:column;justify-content:center}.lt small{font-size:9px;font-weight:500;color:#64748b;line-height:1.2;margin-top:1px}
+.hi{display:flex;gap:14px}
+.hi button{background:none;border:none;cursor:pointer;padding:4px}
+.hi svg{width:22px;height:22px}
+
+.sc{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;background:#f8fafc;width:100%;position:relative}
+.pg{display:none;padding-bottom:20px;min-height:100%;width:100%;overflow-x:hidden;box-sizing:border-box}
+.pg.on{display:block;width:100%}
+
+/* HOME grid */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px}
+.card{background:#fff;border-radius:16px;padding:16px 12px 14px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;box-shadow:0 1px 4px rgba(0,0,0,.05);cursor:pointer;border:none;text-align:left;width:100%}
+.card:active{transform:scale(.97)}
+.card .ci svg{width:44px;height:44px}
+.card .cl{font-size:13.5px;font-weight:500;line-height:1.3}
+.card.hl{background:linear-gradient(135deg,#E8F0FF,#D6E4FF)}
+.sp{padding:0 16px}
+.sh{display:flex;justify-content:space-between;align-items:center;margin:4px 0 12px}
+.sh h3{font-size:15.5px;font-weight:600}
+.sh a{font-size:13.5px;color:var(--blue);text-decoration:none;font-weight:500}
+.banner{border-radius:16px;background:linear-gradient(120deg,#14b8a6,#22d3ee 60%,#38bdf8);height:120px;display:flex;align-items:center;padding:0 18px;cursor:pointer}
+.banner .bt{color:#fff;font-size:22px;font-weight:700}
+
+/* ===== NEW PROFILE (real app style) ===== */
+.pcard{background:#fff;border-radius:16px;margin:14px 16px 12px;padding:14px 16px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.prow{display:flex;align-items:center;gap:12px;cursor:pointer}
+.pphoto{width:56px;height:56px;border-radius:50%;background:#e5e7eb;overflow:visible;flex-shrink:0;position:relative}
+.pphoto img,.pphoto .ph{border-radius:50%;overflow:hidden}
+.pphoto .ph{width:100%;height:100%;background:#e5e7eb}
+.pphoto img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.pphoto .ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+.pphoto .ph svg{width:28px;height:28px;opacity:.4}
+.pbadge{position:absolute;bottom:-8px;right:-10px;width:32px;height:32px;border-radius:0;border:none;background:transparent;display:flex;align-items:center;justify-content:center;z-index:3;filter:drop-shadow(0 2px 4px rgba(0,0,0,.18));pointer-events:none}
+.pbadge svg{width:32px;height:32px;display:block}
+.pinfo{flex:1;min-width:0}
+.pinfo .nm{font-size:16px;font-weight:700;color:var(--blue)}
+.pinfo .em{font-size:12.5px;color:#64748b;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pch{color:#cbd5e1;font-size:18px}
+.pstats{margin-top:12px;padding-top:12px;border-top:1px solid #f1f5f9;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.pstats p{font-size:13px;color:#475569;line-height:1.4;flex:1}
+.pstats p b{color:var(--blue);font-weight:700}
+.pstats .tree{width:48px;height:48px;border-radius:50%;background:#ECFDF5;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pstats .tree svg{width:28px;height:28px}
+
+.sec{padding:8px 16px 0}
+.sec-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.sec-h h3{font-size:15.5px;font-weight:600}
+.btn-sm{background:#fff;border:1px solid #e2e8f0;border-radius:999px;padding:6px 14px;font-size:13px;color:#334155;cursor:pointer;font-weight:500}
+
+/* ID carousel card */
+.id-wrap{overflow:hidden;padding:8px 0 14px;margin:0;position:relative;width:100%;max-width:100%}
+.id-carousel{display:flex;gap:12px;padding:0 16px;align-items:center;transition:transform .35s cubic-bezier(.25,.8,.25,1);will-change:transform;touch-action:pan-y;width:fit-content}
+.id-preview{position:relative;overflow:hidden;background:linear-gradient(165deg,#faf6ee 0%,#f5ebd9 50%,#f0e6d2 100%);border-radius:12px;padding:12px;border:1px solid #e5d9c4;width:280px;min-width:280px;max-width:280px;height:170px;cursor:pointer;position:relative;box-shadow:0 3px 12px rgba(0,0,0,.1);flex-shrink:0;overflow:hidden;user-select:none;-webkit-user-select:none}
+.id-preview img.full{width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;position:absolute;inset:0;z-index:2}
+.id-preview .gen{position:relative;z-index:1;height:100%}
+.id-preview .gen-top{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px}
+.id-preview .flg{width:22px;height:14px;border-radius:1px;background:linear-gradient(to right,#C8102E 0 33.33%,#0033A0 33.33% 66.66%,#C8102E 66.66%);flex-shrink:0;margin-top:2px}
+.id-preview .gen-title{font-size:11px;font-weight:700;color:#1e3a5f;line-height:1.2}
+.id-preview .gen-title span{display:block;font-weight:500;font-size:7.5px;color:#64748b;letter-spacing:.3px;margin-top:1px}
+.id-preview .gen-body{display:flex;gap:10px;align-items:flex-start}
+.id-preview .gen-photo{width:68px;height:84px;border-radius:3px;object-fit:cover;background:#e8e4dc;border:1.5px solid #fff;flex-shrink:0;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.id-preview .gen-fields{flex:1;min-width:0}
+.id-preview .gl{font-size:8px;color:#64748b;line-height:1.15;margin:0}
+.id-preview .gv{font-weight:600;font-size:11px;color:#1e293b;margin-bottom:3px;line-height:1.15}
+.id-preview .sec-strip{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:26px;height:80px;opacity:.85;z-index:1}
+.id-preview .map-icon{position:absolute;right:10px;bottom:6px;width:20px;height:14px;opacity:.45;z-index:1}
+.id-preview .wm{position:absolute;inset:0;opacity:.06;pointer-events:none;background:radial-gradient(circle at 70% 50%,#1e40af 0%,transparent 50%);z-index:0}
+
+.btn-all{display:block;width:100%;margin:12px 0 8px;padding:12px;background:#fff;border:1.5px solid #dbeafe;border-radius:999px;color:var(--blue);font-size:14.5px;font-weight:600;cursor:pointer;text-align:center}
+
+/* Menu list */
+.ml{padding:4px 16px 16px}
+.mi{background:#fff;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:14px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,.04);cursor:pointer;border:none;width:100%;text-align:left}
+.mi .mic{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mi .mic svg{width:22px;height:22px}
+.mi .mit{flex:1;font-size:14.5px;font-weight:500;color:#334155}
+.mi .ch{color:#cbd5e1;font-size:16px}
+
+/* Other pages */
+.al{padding:0 16px 16px}
+.al h3{font-size:15px;font-weight:600;margin:12px 0 10px}
+.ai{background:#fff;border-radius:14px;padding:13px 16px;display:flex;align-items:center;gap:14px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,.04);cursor:pointer;border:none;width:100%;text-align:left}
+.ai .aic{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.ai .ait{flex:1;font-size:14.5px;font-weight:500}
+.ai .ch{color:#c0c4cc}
+.ep{padding:16px}
+.sosb{background:#EF4444;color:#fff;border:none;border-radius:999px;padding:14px 20px;font-size:15px;font-weight:600;width:100%;display:flex;align-items:center;gap:10px;cursor:pointer;margin-bottom:16px;box-shadow:0 4px 12px rgba(239,68,68,.3)}
+.sosc{background:#fff;color:#EF4444;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px}
+.ps{padding:40px 24px;text-align:center;color:var(--muted)}
+.ps h3{color:var(--text);font-size:17px}
+.qr{display:flex;flex-direction:column;align-items:center;padding:48px 24px}
+.qrb{width:200px;height:200px;background:#fff;border-radius:16px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.08);margin-bottom:16px}
+.qr p{font-size:14px;color:var(--muted);text-align:center}
+
+/* NAV */
+.bn{background:#fff;display:flex;justify-content:space-around;align-items:flex-end;padding:6px 0 max(8px,env(safe-area-inset-bottom));box-shadow:0 -1px 10px rgba(0,0,0,.06);flex-shrink:0;z-index:40}
+.nb{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10.5px;color:#9ca3af;background:none;border:none;cursor:pointer;padding:4px 8px;min-width:56px}
+.nb.on{color:var(--blue)}
+.nb svg{width:24px;height:24px}
+.nq{width:52px;height:52px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;margin-top:-20px;box-shadow:0 4px 14px rgba(0,102,255,.4);border:none;cursor:pointer}
+
+/* MODALS */
+.ov{position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:60;display:none}
+.ov.sh{display:block!important}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:20px 20px 0 0;width:100%;max-height:58%;overflow-y:auto;padding:10px 16px 24px;animation:up .25s cubic-bezier(.2,.8,.2,1);box-shadow:0 -8px 30px rgba(0,0,0,.12)}
+@keyframes up{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.shd{width:36px;height:4px;background:#d1d5db;border-radius:2px;margin:4px auto 12px}
+.sheet h3{text-align:center;font-size:16.5px;font-weight:600;margin-bottom:14px}
+.id-full-img{width:100%;border-radius:14px;display:block;margin-bottom:14px;cursor:pointer;max-height:220px;object-fit:contain;background:#faf6ee}
+.idf,.idb{background:linear-gradient(160deg,#fdf8ef,#f5ecd8);border-radius:14px;padding:16px;border:1px solid #e8dcc8;margin-bottom:14px;cursor:pointer;position:relative;overflow:hidden}
+.idfh{display:flex;align-items:flex-start;gap:8px;margin-bottom:12px}
+.idfl{width:28px;height:18px;border-radius:2px;flex-shrink:0;background:linear-gradient(to right,#DA2032 0 33%,#0066B3 33% 66%,#DA2032 66%)}
+.idft{font-size:11px;font-weight:700;line-height:1.25}
+.idft span{display:block;font-weight:400;font-size:9px;color:#555}
+.idfb{display:flex;gap:12px}
+.idfp{width:90px;height:112px;border-radius:4px;object-fit:cover;background:#e5e7eb;flex-shrink:0;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.idff{flex:1;font-size:12px;line-height:1.35}
+.idl{font-size:10px;color:#888;margin-top:4px}
+.idl:first-child{margin-top:0}
+.idv{font-weight:600;font-size:13px}
+.idv.e{color:#aaa;font-weight:400}
+.idbh{text-align:center;margin-bottom:12px}
+.idbh .o{font-size:12px;font-weight:600}
+.idbh .oe{font-size:9px;color:#666}
+.idbb{display:flex;gap:12px}
+.chip{width:52px;height:40px;background:linear-gradient(145deg,#f0d060,#d4a017);border-radius:8px;flex-shrink:0;position:relative}
+.chip::before{content:"";position:absolute;inset:6px;border:1.5px solid rgba(0,0,0,.15);border-radius:4px}
+.idbf{flex:1;font-size:12px}
+.idqr{width:56px;height:56px;background:#fff;border:1px solid #ddd;border-radius:4px;display:flex;align-items:center;justify-content:center;margin-top:10px}
+
+.bp{width:100%;background:var(--blue);color:#fff;border:none;border-radius:999px;padding:14px;font-size:15px;font-weight:600;cursor:pointer;margin-bottom:8px}
+.bp2{width:100%;background:#EFF6FF;color:var(--blue);border:none;border-radius:999px;padding:14px;font-size:15px;font-weight:600;cursor:pointer;margin-bottom:8px}
+.bx{width:100%;background:none;border:none;color:var(--muted);font-size:15px;padding:10px;cursor:pointer}
+
+.fg{margin-bottom:12px}
+.fg label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:4px}
+.fg input,.fg select{width:100%;padding:11px 12px;border:1px solid #e5e7eb;border-radius:11px;font-size:15px;background:#f9fafb}
+.pr{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.ppv{width:72px;height:90px;border-radius:8px;object-fit:cover;background:#e5e7eb}
+.ub{background:#eff6ff;color:var(--blue);border:none;border-radius:10px;padding:10px 14px;font-size:13.5px;cursor:pointer;font-weight:500}
+.toast{position:absolute;top:60px;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#fff;padding:10px 18px;border-radius:999px;font-size:13.5px;z-index:200;opacity:0;transition:opacity .25s;pointer-events:none;white-space:nowrap}
+.toast.on{opacity:1}
+input[type=file]{display:none}
+
+/* overlays */
+.ov{position:fixed;inset:0;z-index:200;background:#f0f4f8;display:none;flex-direction:column;animation:slideIn .25s ease}
+.ov.on{display:flex}
+@keyframes slideIn{from{transform:translateX(30px);opacity:0}to{transform:none;opacity:1}}
+.ov-hd{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;padding-top:max(12px,env(safe-area-inset-top));background:#fff;border-bottom:1px solid #e2e8f0;flex-shrink:0}
+.ov-hd h2{font-size:17px;font-weight:600;flex:1;text-align:center}
+.ov-back{width:36px;height:36px;border:none;background:#f1f5f9;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.ov-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 16px}
+.menu-drawer{position:fixed;top:0;right:0;bottom:0;width:82%;max-width:340px;background:#fff;z-index:300;transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:-4px 0 24px rgba(0,0,0,.15)}
+.menu-drawer.on{transform:translateX(0)}
+.menu-mask{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:299;display:none}
+.menu-mask.on{display:block}
+.menu-item{padding:14px 20px;font-size:15px;color:#1e293b;display:flex;align-items:center;justify-content:space-between;cursor:pointer;border:none;background:none;width:100%;text-align:left}
+.menu-item:active{background:#f1f5f9}
+.sos-btn{margin:16px;background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;border:none;border-radius:14px;padding:16px;font-size:15px;font-weight:600;display:flex;align-items:center;gap:12px;cursor:pointer;box-shadow:0 4px 12px rgba(239,68,68,.3)}
+.logout-btn{margin:0 16px 16px;background:#fef2f2;color:#dc2626;border:none;border-radius:14px;padding:14px;font-size:15px;font-weight:500;display:flex;align-items:center;gap:10px;cursor:pointer;width:calc(100% - 32px)}
+.n-card{background:#fff;border-radius:14px;padding:14px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.n-tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 0 12px;-webkit-overflow-scrolling:touch;width:100%;max-width:100%;box-sizing:border-box}
+.n-tab{padding:8px 14px;border-radius:20px;font-size:13px;font-weight:500;border:none;background:#fff;color:#64748b;white-space:nowrap;cursor:pointer}
+.n-tab.on{background:#0066FF;color:#fff}
+.svc-card{background:#fff;border-radius:14px;padding:14px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.04);cursor:pointer}
+.svc-tag{font-size:11px;color:#94a3b8;margin-bottom:4px}
+.svc-title{font-size:15px;font-weight:600;color:#1e293b;margin-bottom:4px}
+.svc-sub{font-size:12px;color:#94a3b8}
+.svc-icons{display:flex;gap:6px;margin-top:8px}
+.svc-icons span{width:22px;height:22px;border-radius:6px;background:#dcfce7;display:flex;align-items:center;justify-content:center;font-size:11px}
+
+
+
+/* FULL PAGE OVERLAYS */
+.page-ov{position:fixed;top:0;left:0;width:100vw;height:100vh;height:100dvh;z-index:99999;background:#f0f4f8;display:none;flex-direction:column;margin:0;padding:0;box-sizing:border-box;overflow:hidden}
+.page-ov.on{display:flex}
+.page-ov .ov-hd{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;padding-top:max(12px,env(safe-area-inset-top));background:#fff;border-bottom:1px solid #e2e8f0;flex-shrink:0;width:100%;box-sizing:border-box}
+.page-ov .ov-hd h2{font-size:17px;font-weight:600;flex:1;text-align:center;margin:0;color:#0f172a}
+.page-ov .ov-back{width:36px;height:36px;border:none;background:#f1f5f9;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.page-ov .ov-body{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:12px 16px;width:100%;box-sizing:border-box}
+.page-ov.dark{background:#1a1a1a}
+.page-ov.dark .ov-hd{background:#1a1a1a;border-bottom-color:#333}
+.page-ov.dark .ov-hd h2{color:#fff}
+.page-ov.dark .ov-back{background:#333}
+.page-ov.dark .ov-back svg{stroke:#fff}
+
+
+/* ID bottom sheet - pinned to bottom */
+#ido{
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  top:0!important;
+  bottom:0!important;
+  z-index:90!important;
+  display:none;
+  background:rgba(0,0,0,.45)!important;
+  backdrop-filter:blur(2px);
+  -webkit-backdrop-filter:blur(2px);
+}
+#ido.sh{display:block!important}
+#ido .sheet{
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  bottom:0!important;
+  top:auto!important;
+  max-height:58%!important;
+  height:auto!important;
+  width:100%!important;
+  margin:0!important;
+  border-radius:20px 20px 0 0!important;
+  padding:8px 16px 22px!important;
+  overflow-y:auto!important;
+  background:#fff!important;
+  box-shadow:0 -8px 32px rgba(0,0,0,.18)!important;
+  animation:idUp .28s cubic-bezier(.22,.9,.3,1);
+  transform:none!important;
+}
+@keyframes idUp{from{transform:translateY(110%)}to{transform:translateY(0)}}
+#ido .shd{width:36px;height:4px;background:#d1d5db;border-radius:2px;margin:2px auto 10px}
+#ido h3{font-size:16px;font-weight:600;text-align:center;margin:0 0 10px;color:#1e293b}
+
+</style>
+</head>
+<body>
+<div class="phone">
+<div id="pin">
+  <div class="pt">Та пин кодоо оруулан системд<br>нэвтэрнэ үү</div>
+  <div class="pd" id="pd"><div class="pdo on"></div><div class="pdo"></div><div class="pdo"></div><div class="pdo"></div></div>
+  <div class="pl">
+    <button>Пин кодоо мартсан?</button>
+    <button>Өөр хэрэглэгчээр нэвтрэх</button>
+    <button class="sk" onclick="login()">Шууд нэвтрэх</button>
+  </div>
+  <div class="bb"><button class="sos">SOS</button><button class="face" onclick="login()">Face ID-р нэвтрэх</button></div>
+  <div class="kp" id="kp">
+    <button class="k" data-n="1">1</button><button class="k" data-n="2">2<small>ABC</small></button><button class="k" data-n="3">3<small>DEF</small></button>
+    <button class="k" data-n="4">4<small>GHI</small></button><button class="k" data-n="5">5<small>JKL</small></button><button class="k" data-n="6">6<small>MNO</small></button>
+    <button class="k" data-n="7">7<small>PQRS</small></button><button class="k" data-n="8">8<small>TUV</small></button><button class="k" data-n="9">9<small>WXYZ</small></button>
+    <div class="k em"></div><button class="k" data-n="0">0</button><button class="k bk" data-n="b">⌫</button>
+  </div>
+</div>
+
+<div class="hd" id="hd" style="display:none">
+  <div class="logo"><div class="lb">e</div><div class="lt"><span class="ln">mongolia</span><small>Цахим үндэстэн</small></div></div>
+  <div class="hi">
+    <button onclick="openNotif()" aria-label="Мэдэгдэл"><svg viewBox="0 0 24 24" fill="none" stroke="#0066FF" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></button>
+    <button onclick="openMenu()" aria-label="Цэс"><svg viewBox="0 0 24 24" fill="none" stroke="#0066FF" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</div>
+
+<div class="sc" id="sc" style="display:none">
+  <!-- HOME -->
+  <div class="pg on" id="p-home">
+    <div style="padding:18px 16px 10px;background:linear-gradient(180deg,#d6ebff 0%,#e8f4ff 25%,#f0f7ff 55%,#f8fafc 100%);position:relative;overflow:hidden;min-height:280px">
+      <!-- soft clouds -->
+      <svg style="position:absolute;top:20px;right:-20px;width:160px;height:80px;opacity:.5;pointer-events:none" viewBox="0 0 200 80" fill="#fff"><ellipse cx="50" cy="45" rx="40" ry="22"/><ellipse cx="90" cy="38" rx="35" ry="25"/><ellipse cx="130" cy="48" rx="38" ry="20"/><ellipse cx="70" cy="50" rx="30" ry="18"/></svg>
+      <svg style="position:absolute;top:60px;left:-30px;width:140px;height:70px;opacity:.4;pointer-events:none" viewBox="0 0 200 80" fill="#fff"><ellipse cx="60" cy="45" rx="45" ry="24"/><ellipse cx="100" cy="40" rx="38" ry="26"/><ellipse cx="140" cy="50" rx="35" ry="18"/></svg>
+      <!-- bottom waves -->
+      <svg style="position:absolute;bottom:0;left:0;width:100%;height:60px;opacity:.35;pointer-events:none" viewBox="0 0 400 60" preserveAspectRatio="none" fill="none"><path d="M0 40 Q50 20 100 35 T200 30 T300 40 T400 25 V60 H0Z" fill="#bfdbfe"/><path d="M0 50 Q80 30 160 45 T320 40 T400 35 V60 H0Z" fill="#93c5fd" opacity=".5"/></svg>
+
+      <div style="font-size:24px;font-weight:700;color:#0f172a;line-height:1.35;margin-bottom:18px;letter-spacing:-.4px;position:relative;z-index:1;text-align:center">Төрийн үйлчилгээ, мэдээллийг<br>нэг дороос</div>
+      <div onclick="openWeather()" style="background:#fff;border-radius:20px;padding:8px 12px;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:#334155;box-shadow:0 1px 3px rgba(0,0,0,.06);white-space:nowrap;cursor:pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        <span style="color:#94a3b8;font-size:15px;flex:1">Үйлчилгээ хайх</span>
+      </div>
+      <div style="display:flex;overflow-x:auto;padding:12px 0 8px;-webkit-overflow-scrolling:touch;gap:8px;margin:0">
+        <div onclick="openWeather()" style="background:#fff;border-radius:999px;padding:9px 14px;font-size:13px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.06);display:flex;align-items:center;gap:6px;color:#334155;cursor:pointer;flex-shrink:0">
+          <span style="font-size:15px">☁️</span> Өдөр -4° C
+        </div>
+        <div onclick="openDetail('Цагалбар')" style="background:#fff;border-radius:999px;padding:9px 14px;font-size:13px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.06);display:flex;align-items:center;gap:7px;color:#334155;cursor:pointer;flex-shrink:0">
+          <span style="background:#3B82F6;color:#fff;border-radius:7px;padding:2px 7px;font-size:12px;font-weight:700">31</span> Цагалбар
+        </div>
+        <div onclick="openDetail('Ханшийн мэдээлэл')" style="background:#fff;border-radius:999px;padding:9px 14px;font-size:13px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.06);display:flex;align-items:center;gap:6px;color:#334155;cursor:pointer;flex-shrink:0">
+          <span style="font-size:15px">💵</span> 3,596
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3 style="font-size:17px;font-weight:700;color:#0f172a">Хөтөч</h3>
+        <span style="color:#0066FF;font-size:14px;font-weight:500;cursor:pointer" onclick="go('services')">Бүгд ›</span>
+      </div>
+      <div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:10px;-webkit-overflow-scrolling:touch">
+        <!-- Цэргийн алба - blue scroll -->
+        
+        <div onclick="guidePage('Цэргийн алба')" style="min-width:118px;width:118px;height:132px;border-radius:18px;background:linear-gradient(160deg,#dbeafe 0%,#bfdbfe 100%);padding:14px 12px 10px;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 2px 8px rgba(59,130,246,.12);flex-shrink:0">
+          <div style="font-size:14px;font-weight:700;color:#0f172a;line-height:1.25">Цэргийн<br>алба</div>
+          <div style="display:flex;justify-content:center;align-items:flex-end;height:64px">
+            <svg width="56" height="56" viewBox="0 0 64 64" fill="none">
+              <!-- scroll rods -->
+              <rect x="12" y="10" width="40" height="6" rx="3" fill="#D4A017"/>
+              <circle cx="12" cy="13" r="4" fill="#E8B923"/><circle cx="52" cy="13" r="4" fill="#E8B923"/>
+              <!-- banner body -->
+              <path d="M14 16h36v28c0 0-6 4-18 4S14 44 14 44V16z" fill="#3B82F6"/>
+              <path d="M14 16h36v28c0 0-6 4-18 4S14 44 14 44V16z" fill="url(#g1)" opacity=".3"/>
+              <!-- chevrons -->
+              <path d="M24 24l8 5 8-5" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <path d="M24 33l8 5 8-5" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <!-- fringe -->
+              <path d="M18 48v6M24 46v8M30 48v6M34 46v8M40 48v6M46 46v8" stroke="#4ADE80" stroke-width="2.5" stroke-linecap="round"/>
+              <defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient></defs>
+            </svg>
+          </div>
+        </div>
+        <div onclick="guidePage('Бичиг баримт')" style="min-width:118px;width:118px;height:132px;border-radius:18px;background:linear-gradient(160deg,#ffedd5 0%,#fed7aa 100%);padding:14px 12px 10px;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 2px 8px rgba(249,115,22,.12);flex-shrink:0">
+          <div style="font-size:14px;font-weight:700;color:#0f172a;line-height:1.25">Бичиг<br>баримт</div>
+          <div style="display:flex;justify-content:center;align-items:flex-end;height:64px">
+            <svg width="56" height="56" viewBox="0 0 64 64" fill="none">
+              <!-- paper -->
+              <rect x="22" y="8" width="28" height="38" rx="3" fill="#E9D5FF" transform="rotate(8 36 27)"/>
+              <rect x="18" y="12" width="28" height="38" rx="3" fill="#F3E8FF"/>
+              <!-- lines -->
+              <path d="M24 22h16M24 28h14M24 34h12" stroke="#A78BFA" stroke-width="2" stroke-linecap="round"/>
+              <!-- key -->
+              <circle cx="28" cy="44" r="8" fill="#FBBF24"/>
+              <circle cx="28" cy="44" r="4" fill="#FEF3C7"/>
+              <rect x="34" y="42" width="14" height="4" rx="1.5" fill="#F59E0B"/>
+              <rect x="44" y="40" width="3" height="3" rx=".5" fill="#F59E0B"/>
+              <rect x="44" y="45" width="3" height="3" rx=".5" fill="#F59E0B"/>
+            </svg>
+          </div>
+        </div>
+        <div onclick="guidePage('Хүүхэд')" style="min-width:118px;width:118px;height:132px;border-radius:18px;background:linear-gradient(160deg,#fef9c3 0%,#fde68a 100%);padding:14px 12px 10px;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 2px 8px rgba(234,179,8,.12);flex-shrink:0">
+          <div style="font-size:14px;font-weight:700;color:#0f172a;line-height:1.25">Хүүхэд</div>
+          <div style="display:flex;justify-content:center;align-items:flex-end;height:64px">
+            <svg width="56" height="56" viewBox="0 0 64 64" fill="none">
+              <!-- puzzle pieces -->
+              <path d="M8 20h16c0 4 4 4 4 0v-4h8c4 0 4 4 0 4h4v16h-4c-4 0-4 4 0 4h-8v-4c0-4-4-4-4 0v12H8V20z" fill="#F472B6"/>
+              <path d="M36 12h16v16h-4c-4 0-4 4 0 4h4v8c0 4-4 4-4 0h-8c0 4-4 4-4 0V12z" fill="#60A5FA"/>
+              <path d="M20 40c4 0 4 4 0 4h-4v12h20v-4c0-4 4-4 4 0h8V40H20z" fill="#FBBF24"/>
+              <path d="M40 36c0-4 4-4 4 0h8v16h-8c0 4-4 4-4 0h-8c0 4-4 4-4 0V36h12z" fill="#4ADE80"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Banner area like real app -->
+    <div style="padding:4px 16px 20px">
+      <div style="border-radius:16px;overflow:hidden;background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 50%,#0c4a6e 100%);height:100px;position:relative;display:flex;align-items:center;padding:0 16px;box-shadow:0 4px 12px rgba(15,23,42,.2)">
+        <div style="color:#fff;z-index:1">
+          <div style="font-size:11px;opacity:.8;margin-bottom:4px">ЧИНГИС ХААН</div>
+          <div style="font-size:15px;font-weight:700;line-height:1.2">Үндэсний баялгийн сан</div>
+          <div style="font-size:12px;opacity:.7;margin-top:2px">Хуримтлалын сан</div>
+        </div>
+        <div style="position:absolute;right:12px;bottom:8px;opacity:.3;font-size:48px">🏔️</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <div class="pg" id="p-services">
+    <div style="padding:12px 16px">
+      <div style="display:flex;justify-content:flex-end;align-items:center;margin-bottom:14px">
+        <button onclick="openDetail('Хадгалсан үйлчилгээ')" style="background:#FFF7ED;border:none;border-radius:20px;padding:8px 14px;font-size:13px;font-weight:600;color:#ea580c;display:flex;align-items:center;gap:6px;cursor:pointer">🔖 Хадгалсан</button>
+      </div>
+      <!-- promo cards -->
+      <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:12px;-webkit-overflow-scrolling:touch;margin-bottom:8px">
+        <div style="min-width:200px;height:110px;border-radius:14px;background:linear-gradient(135deg,#1e3a5f,#0f172a);padding:12px;color:#fff;flex-shrink:0;position:relative;overflow:hidden">
+          <div style="font-size:11px;opacity:.7">Цахим</div>
+          <div style="font-size:14px;font-weight:700;margin-top:4px">Апостиль<br>гэрчилгээ</div>
+        </div>
+        <div style="min-width:200px;height:110px;border-radius:14px;background:linear-gradient(135deg,#7f1d1d,#450a0a);padding:12px;color:#fff;flex-shrink:0">
+          <div style="font-size:11px;opacity:.7">Кибер халдлага</div>
+          <div style="font-size:14px;font-weight:700;margin-top:4px">Эрчлийн<br>мэдээлэх</div>
+        </div>
+      </div>
+      <div style="background:#fff;border:1.5px solid #818cf8;border-radius:999px;padding:12px 16px;display:flex;align-items:center;gap:10px;margin-bottom:16px">
+        <span style="font-size:18px">🎤</span>
+        <span style="color:#94a3b8;font-size:14px">Үйлчилгээ хайх</span>
+      </div>
+      <div style="font-size:15px;font-weight:700;margin-bottom:4px">Танд зориулсан</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div style="font-size:14px;font-weight:600;color:#334155">Бүх үйлчилгээ</div>
+        <span style="color:#0066FF;font-size:13px;cursor:pointer" onclick="openDetail('Үйлчилгээний ангилал')">Ангилал ›</span>
+      </div>
+      <div class="svc-card" onclick="openDetail('Нийгмийн даатгалын шимтгэл төлөлтийн лавлагаа')">
+        <div class="svc-tag">Төлбөргүй</div>
+        <div class="svc-title">Нийгмийн даатгалын шимтгэл төлөлтийн лавлагаа</div>
+        <div class="svc-sub">Үйлчилгээ авах боломжтой суваг</div>
+        <div class="svc-icons"><span>📱</span><span>💻</span><span>🏢</span></div>
+      </div>
+      <div class="svc-card" onclick="openDetail('Иргэний үнэмлэхийн лавлагаа')">
+        <div class="svc-tag">Төлбөргүй</div>
+        <div class="svc-title">Иргэний үнэмлэхийн лавлагаа</div>
+        <div class="svc-sub">Үйлчилгээ авах боломжтой суваг</div>
+        <div class="svc-icons"><span>📱</span><span>💻</span><span>🏢</span></div>
+      </div>
+      <div class="svc-card" onclick="openDetail('Оршин суугаа газрын хаягийн лавлагаа')">
+        <div class="svc-tag">Төлбөргүй</div>
+        <div class="svc-title">Иргэний оршин суугаа газрын хаягийн бүртгэлийн лавлагаа</div>
+        <div class="svc-sub">Үйлчилгээ авах боломжтой суваг</div>
+        <div class="svc-icons"><span>📱</span><span>💻</span><span>🏢</span></div>
+      </div>
+      <div class="svc-card" onclick="openDetail('Автотээврийн торгуулийн мэдээлэл')">
+        <div class="svc-tag">Төлбөргүй</div>
+        <div class="svc-title">Автотээврийн хэрэгслийн торгуулийн мэдээлэл</div>
+        <div class="svc-sub">Үйлчилгээ авах боломжтой суваг</div>
+        <div class="svc-icons"><span>📱</span><span>💻</span><span>🏢</span></div>
+      </div>
+      <div class="svc-card" onclick="openDetail('Эрүүл мэндийн даатгалын төлөлт')">
+        <div class="svc-tag">Төлбөргүй</div>
+        <div class="svc-title">Эрүүл мэндийн даатгалын төлөлт шалгах</div>
+        <div class="svc-sub">Үйлчилгээ авах боломжтой суваг</div>
+        <div class="svc-icons"><span>📱</span><span>💻</span><span>🏢</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pg" id="p-extra">
+    <div style="padding:16px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div onclick="openDetail('Нээлттэй Парламент')" style="background:#fff;border-radius:16px;padding:18px 14px;box-shadow:0 1px 4px rgba(0,0,0,.05);cursor:pointer;min-height:110px;display:flex;flex-direction:column;gap:12px">
+          <div style="width:44px;height:44px;border-radius:12px;background:#F0FDF4;display:flex;align-items:center;justify-content:center;overflow:hidden">
+            <svg width="32" height="32" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="#166534"/><circle cx="24" cy="24" r="16" fill="#FEF3C7"/><path d="M24 10l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6z" fill="#CA8A04"/><circle cx="24" cy="24" r="6" fill="#166534"/></svg>
+          </div>
+          <div style="font-size:14px;font-weight:600;color:#1e293b;line-height:1.3">Нээлттэй<br>Парламент</div>
+        </div>
+        <div onclick="openDetail('Төрийн албан хаагчийн цэс')" style="background:#fff;border-radius:16px;padding:18px 14px;box-shadow:0 1px 4px rgba(0,0,0,.05);cursor:pointer;min-height:110px;display:flex;flex-direction:column;gap:12px">
+          <div style="width:44px;height:44px;border-radius:12px;background:#F1F5F9;display:flex;align-items:center;justify-content:center">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M3 21h18M5 21V10l7-5 7 5v11M9 21v-6h6v6" stroke="#64748b" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 10h.01M15 10h.01M12 7h.01" stroke="#64748b" stroke-width="2.5" stroke-linecap="round"/></svg>
+          </div>
+          <div style="font-size:14px;font-weight:600;color:#1e293b;line-height:1.3">Төрийн албан<br>хаагчийн цэс</div>
+        </div>
+        <div onclick="openDetail('Оюутан')" style="background:#fff;border-radius:16px;padding:18px 14px;box-shadow:0 1px 4px rgba(0,0,0,.05);cursor:pointer;min-height:110px;display:flex;flex-direction:column;gap:12px">
+          <div style="width:44px;height:44px;border-radius:12px;background:#EFF6FF;display:flex;align-items:center;justify-content:center">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z" fill="#1e293b"/><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z" fill="#334155"/></svg>
+          </div>
+          <div style="font-size:14px;font-weight:600;color:#1e293b;line-height:1.3">Оюутан</div>
+        </div>
+        <div onclick="openDetail('Ажлын байр')" style="background:#fff;border-radius:16px;padding:18px 14px;box-shadow:0 1px 4px rgba(0,0,0,.05);cursor:pointer;min-height:110px;display:flex;flex-direction:column;gap:12px">
+          <div style="width:44px;height:44px;border-radius:12px;background:#EFF6FF;display:flex;align-items:center;justify-content:center">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="7" width="18" height="13" rx="2" fill="#3B82F6"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2" stroke="#1e40af" stroke-width="1.8"/><path d="M12 11v4" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <div style="font-size:14px;font-weight:600;color:#1e293b;line-height:1.3">Ажлын байр</div>
+        </div>
+        <div onclick="openDetail('Нийтийн тээврийн тасалбар')" style="background:#fff;border-radius:16px;padding:18px 14px;box-shadow:0 1px 4px rgba(0,0,0,.05);cursor:pointer;min-height:110px;display:flex;flex-direction:column;gap:12px">
+          <div style="width:44px;height:44px;border-radius:12px;background:#F3E8FF;display:flex;align-items:center;justify-content:center">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="14" rx="2" fill="#8B5CF6"/><circle cx="8" cy="19" r="2" fill="#8B5CF6"/><circle cx="16" cy="19" r="2" fill="#8B5CF6"/><path d="M4 11h16" stroke="#fff" stroke-width="1.5"/><path d="M8 7h.01M12 7h.01" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg>
+          </div>
+          <div style="font-size:14px;font-weight:600;color:#1e293b;line-height:1.3">Нийтийн тээврийн<br>тасалбар захиалга</div>
+        </div>
+        <div onclick="openDetail('11-11 төвд өргөдөл, гомдол')" style="background:#fff;border-radius:16px;padding:18px 14px;box-shadow:0 1px 4px rgba(0,0,0,.05);cursor:pointer;min-height:110px;display:flex;flex-direction:column;gap:12px">
+          <div style="width:44px;height:44px;border-radius:12px;background:#EEF2FF;display:flex;align-items:center;justify-content:center">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="5" y="2" width="14" height="18" rx="2" fill="#6366F1"/><path d="M9 7h6M9 11h6M9 15h4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/><path d="M16 16l2 1v3" stroke="#A5B4FC" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div style="font-size:14px;font-weight:600;color:#1e293b;line-height:1.3">11-11 төвд өргөдөл,<br>гомдол илгээх</div>
+        </div>
+        <div onclick="openDetail('АТГ-т хандах')" style="background:#fff;border-radius:16px;padding:18px 14px;box-shadow:0 1px 4px rgba(0,0,0,.05);cursor:pointer;min-height:110px;display:flex;flex-direction:column;gap:12px">
+          <div style="width:44px;height:44px;border-radius:12px;background:#FEF2F2;display:flex;align-items:center;justify-content:center">
+            <svg width="32" height="32" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="#fff" stroke="#DC2626" stroke-width="2"/><circle cx="24" cy="24" r="14" fill="#FEF2F2"/><path d="M24 12l3 8h8l-6.5 5 2.5 8L24 28l-7 5 2.5-8L13 20h8z" fill="#DC2626"/><text x="24" y="42" text-anchor="middle" font-size="6" fill="#991B1B" font-weight="700">АТГ</text></svg>
+          </div>
+          <div style="font-size:14px;font-weight:600;color:#1e293b;line-height:1.3">АТГ-т хандах</div>
+        </div>
+        <div onclick="openDetail('Өмгөөлөгчид хандах')" style="background:#fff;border-radius:16px;padding:18px 14px;box-shadow:0 1px 4px rgba(0,0,0,.05);cursor:pointer;min-height:110px;display:flex;flex-direction:column;gap:12px">
+          <div style="width:44px;height:44px;border-radius:12px;background:#FEF9C3;display:flex;align-items:center;justify-content:center">
+            <svg width="32" height="32" viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="#FEF3C7" stroke="#CA8A04" stroke-width="2"/><path d="M24 14v12l6 4" stroke="#A16207" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="24" cy="24" r="3" fill="#CA8A04"/></svg>
+          </div>
+          <div style="font-size:14px;font-weight:600;color:#1e293b;line-height:1.3">Өмгөөлөгчид<br>хандах</div>
+        </div>
+        <div onclick="openDetail('Эрсдэл мэдэгдэх')" style="background:#fff;border-radius:16px;padding:18px 14px;box-shadow:0 1px 4px rgba(0,0,0,.05);cursor:pointer;min-height:110px;display:flex;flex-direction:column;gap:12px">
+          <div style="width:44px;height:44px;border-radius:12px;background:#FEF3C7;display:flex;align-items:center;justify-content:center">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 3L2 21h20L12 3z" fill="#F59E0B"/><path d="M12 10v5M12 17v1" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>
+          </div>
+          <div style="font-size:14px;font-weight:600;color:#1e293b;line-height:1.3">Эрсдэл мэдэгдэх</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pg" id="p-profile">
+    <div class="pcard">
+      <div class="prow" onclick="openEdit()">
+        <div class="pphoto" onclick="event.stopPropagation();pickFace()">
+          <div class="ph" id="pph"><svg viewBox="0 0 24 24" fill="#9ca3af"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div>
+          <img id="pimg" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:50%" alt=""/>
+          <div class="pbadge"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#e0c3fc"/><stop offset="30%" stop-color="#8ec5fc"/><stop offset="60%" stop-color="#a8edea"/><stop offset="100%" stop-color="#d4a5f5"/></linearGradient><linearGradient id="sy" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#1e40af"/></linearGradient></defs><path fill="url(#hg)" d="M32 4c1.8 0 3 1.5 4.4 2.2 1.5.7 3.4-.2 4.7.7 1.3.9 1.3 3 2.4 4.1 1.1 1.1 3.2 1.1 4.1 2.4.9 1.3 0 3.2.7 4.7C49.5 29 51 30.2 51 32s-1.5 3-2.2 4.4c-.7 1.5.2 3.4-.7 4.7-.9 1.3-3 1.3-4.1 2.4-1.1 1.1-1.1 3.2-2.4 4.1-1.3.9-3.2 0-4.7.7C35 49.5 33.8 51 32 51s-3-1.5-4.4-2.2c-1.5-.7-3.4.2-4.7-.7-1.3-.9-1.3-3-2.4-4.1-1.1-1.1-3.2-1.1-4.1-2.4-.9-1.3 0-3.2-.7-4.7C14.5 35 13 33.8 13 32s1.5-3 2.2-4.4c.7-1.5-.2-3.4.7-4.7.9-1.3 3-1.3 4.1-2.4 1.1-1.1 1.1-3.2 2.4-4.1 1.3-.9 3.2 0 4.7-.7C29 5.5 30.2 4 32 4z"/><g fill="url(#sy)" transform="translate(32,32) scale(0.9) translate(-20,-20)"><path d="M20 2c-.7 2-1 3.4-1 5s.6 2.7 1 2.7 1-.7 1-2.7S20.7 4 20 2z"/><ellipse cx="20" cy="8.5" rx="2.8" ry="1.6"/><rect x="11.5" y="13" width="2.8" height="15" rx=".4"/><rect x="25.7" y="13" width="2.8" height="15" rx=".4"/><rect x="16" y="15" width="8" height="8.5" rx=".7"/><circle cx="20" cy="19.2" r="2.6" fill="#93c5fd"/><path d="M20 16.6a2.6 2.6 0 010 5.2 1.3 1.3 0 000-2.6 1.3 1.3 0 000-2.6"/><rect x="16" y="24.5" width="8" height="1.2"/><path d="M17.2 26.5l2.8 3.2 2.8-3.2z"/><rect x="18.8" y="29" width="2.4" height="2"/></g></svg></div>
+        </div>
+        <div class="pinfo"><div class="nm" id="pn">Б.Болд</div><div class="em" id="pe">user@e-mongolia.mn</div></div>
+        <span class="pch">›</span>
+      </div>
+      <div class="pstats">
+        <p>Та нийт <b>0</b> үйлчилгээ авч дараах<br>хэмнэлтийг хийсэн байна.</p>
+        <div class="tree"><svg viewBox="0 0 24 24" fill="#22C55E"><path d="M12 2L8 8h3v4H7l5 8 5-8h-4V8h3z"/><rect x="11" y="18" width="2" height="4" fill="#166534"/></svg></div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-h"><h3>Миний бичиг баримтууд</h3><button class="btn-sm" onclick="toast('Шинэчлэгдлээ')">Шинэчлэх</button></div>
+      <div class="id-wrap" id="id-wrap">
+        <div class="id-carousel" id="id-carousel">
+          <div class="id-preview" data-idx="0" onclick="openId()">
+            <div class="wm"></div>
+            <img class="full" style="display:none" alt=""/>
+            <div class="gen">
+              <div class="gen-top">
+                <div class="flg"></div>
+                <div class="gen-title">МОНГОЛ УЛСЫН ИРГЭНИЙ ҮНЭМЛЭХ<span>CITIZEN IDENTITY CARD OF MONGOLIA</span></div>
+              </div>
+              <div class="gen-body">
+                <img class="gen-photo" style="display:none" alt=""/>
+                <div class="gen-photo mpph" style="display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="22" height="22" fill="#bbb"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div>
+                <div class="gen-fields">
+                  <div class="gl">Овог Family name</div><div class="gv">Бат</div>
+                  <div class="gl">Эцэг/ эх /-ийн нэр Surname</div><div class="gv">Болдбаатар</div>
+                  <div class="gl">Нэр Given name</div><div class="gv">БОЛД</div>
+                  <div class="gl">Хүйс Sex</div><div class="gv">Эрэгтэй</div>
+                  <div class="gl">Төрсөн он, сар өдөр</div><div class="gv">1995/05/15</div>
+                  <div class="gl">Иргэний бүртгэлийн дугаар</div><div class="gv">УБ95051512</div>
+                </div>
+              </div>
+              <svg class="sec-strip" viewBox="0 0 40 120" fill="none"><rect x="8" y="4" width="24" height="112" rx="4" stroke="#1e3a8a" stroke-width="2.5"/><path d="M14 20h12M14 28h12M14 36h12M14 48h12M14 56h12M14 64h12M14 76h12M14 84h12M14 92h12" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round"/></svg>
+              <svg class="map-icon" viewBox="0 0 40 28" fill="#166534"><path d="M2 14c2-4 6-8 12-9 4-1 8 0 12 2 3 1 6 3 8 6 1 2 2 5 1 7-2 3-6 4-10 4-5 0-9-1-13-3-4-2-7-4-10-7z"/></svg>
+            </div>
+          </div>
+          <div class="id-preview" data-idx="1" onclick="openId()">
+            <div class="wm"></div>
+            <img class="full" style="display:none" alt=""/>
+            <div class="gen">
+              <div class="gen-top">
+                <div class="flg"></div>
+                <div class="gen-title">МОНГОЛ УЛСЫН ИРГЭНИЙ ҮНЭМЛЭХ<span>CITIZEN IDENTITY CARD OF MONGOLIA</span></div>
+              </div>
+              <div class="gen-body">
+                <img class="gen-photo" style="display:none" alt=""/>
+                <div class="gen-photo mpph" style="display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="22" height="22" fill="#bbb"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div>
+                <div class="gen-fields">
+                  <div class="gl">Овог Family name</div><div class="gv">Бат</div>
+                  <div class="gl">Эцэг/ эх /-ийн нэр Surname</div><div class="gv">Болдбаатар</div>
+                  <div class="gl">Нэр Given name</div><div class="gv">БОЛД</div>
+                  <div class="gl">Хүйс Sex</div><div class="gv">Эрэгтэй</div>
+                  <div class="gl">Төрсөн он, сар өдөр</div><div class="gv">1995/05/15</div>
+                  <div class="gl">Иргэний бүртгэлийн дугаар</div><div class="gv">УБ95051512</div>
+                </div>
+              </div>
+              <svg class="sec-strip" viewBox="0 0 40 120" fill="none"><rect x="8" y="4" width="24" height="112" rx="4" stroke="#1e3a8a" stroke-width="2.5"/><path d="M14 20h12M14 28h12M14 36h12M14 48h12M14 56h12M14 64h12M14 76h12M14 84h12M14 92h12" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round"/></svg>
+              <svg class="map-icon" viewBox="0 0 40 28" fill="#166534"><path d="M2 14c2-4 6-8 12-9 4-1 8 0 12 2 3 1 6 3 8 6 1 2 2 5 1 7-2 3-6 4-10 4-5 0-9-1-13-3-4-2-7-4-10-7z"/></svg>
+            </div>
+          </div>
+          <div class="id-preview" data-idx="2" id="id-preview" onclick="openId()">
+            <div class="wm"></div>
+            <img class="full" id="id-thumb-full" style="display:none" alt=""/>
+            <div class="gen" id="id-thumb-gen">
+              <div class="gen-top">
+                <div class="flg"></div>
+                <div class="gen-title">МОНГОЛ УЛСЫН ИРГЭНИЙ ҮНЭМЛЭХ<span>CITIZEN IDENTITY CARD OF MONGOLIA</span></div>
+              </div>
+              <div class="gen-body">
+                <img class="gen-photo" id="mp" style="display:none" alt=""/>
+                <div id="mp-ph" class="gen-photo mpph" style="display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="22" height="22" fill="#bbb"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div>
+                <div class="gen-fields">
+                  <div class="gl">Овог Family name</div><div class="gv" id="tf">Бат</div>
+                  <div class="gl">Эцэг/ эх /-ийн нэр Surname</div><div class="gv" id="ts">Болдбаатар</div>
+                  <div class="gl">Нэр Given name</div><div class="gv" id="tg">БОЛД</div>
+                  <div class="gl">Хүйс Sex</div><div class="gv" id="tx">Эрэгтэй</div>
+                  <div class="gl">Төрсөн он, сар өдөр</div><div class="gv" id="td">1995/05/15</div>
+                  <div class="gl">Иргэний бүртгэлийн дугаар</div><div class="gv" id="tr">УБ95051512</div>
+                </div>
+              </div>
+              <svg class="sec-strip" viewBox="0 0 40 120" fill="none"><rect x="8" y="4" width="24" height="112" rx="4" stroke="#1e3a8a" stroke-width="2.5"/><path d="M14 20h12M14 28h12M14 36h12M14 48h12M14 56h12M14 64h12M14 76h12M14 84h12M14 92h12" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round"/></svg>
+              <svg class="map-icon" viewBox="0 0 40 28" fill="#166534"><path d="M2 14c2-4 6-8 12-9 4-1 8 0 12 2 3 1 6 3 8 6 1 2 2 5 1 7-2 3-6 4-10 4-5 0-9-1-13-3-4-2-7-4-10-7z"/></svg>
+            </div>
+          </div>
+          <div class="id-preview" data-idx="3" onclick="openId()">
+            <div class="wm"></div>
+            <img class="full" style="display:none" alt=""/>
+            <div class="gen">
+              <div class="gen-top">
+                <div class="flg"></div>
+                <div class="gen-title">МОНГОЛ УЛСЫН ИРГЭНИЙ ҮНЭМЛЭХ<span>CITIZEN IDENTITY CARD OF MONGOLIA</span></div>
+              </div>
+              <div class="gen-body">
+                <img class="gen-photo" class="mp-3" style="display:none" alt=""/>
+                <div class="gen-photo mpph" style="display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="22" height="22" fill="#bbb"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div>
+                <div class="gen-fields">
+                  <div class="gl">Овог Family name</div><div class="gv">Бат</div>
+                  <div class="gl">Эцэг/ эх /-ийн нэр Surname</div><div class="gv">Болдбаатар</div>
+                  <div class="gl">Нэр Given name</div><div class="gv">БОЛД</div>
+                  <div class="gl">Хүйс Sex</div><div class="gv">Эрэгтэй</div>
+                  <div class="gl">Төрсөн он, сар өдөр</div><div class="gv">1995/05/15</div>
+                  <div class="gl">Иргэний бүртгэлийн дугаар</div><div class="gv">УБ95051512</div>
+                </div>
+              </div>
+              <svg class="sec-strip" viewBox="0 0 40 120" fill="none"><rect x="8" y="4" width="24" height="112" rx="4" stroke="#1e3a8a" stroke-width="2.5"/><path d="M14 20h12M14 28h12M14 36h12M14 48h12M14 56h12M14 64h12M14 76h12M14 84h12M14 92h12" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round"/></svg>
+              <svg class="map-icon" viewBox="0 0 40 28" fill="#166534"><path d="M2 14c2-4 6-8 12-9 4-1 8 0 12 2 3 1 6 3 8 6 1 2 2 5 1 7-2 3-6 4-10 4-5 0-9-1-13-3-4-2-7-4-10-7z"/></svg>
+            </div>
+          </div>
+          <div class="id-preview" data-idx="4" onclick="openId()">
+            <div class="wm"></div>
+            <img class="full" style="display:none" alt=""/>
+            <div class="gen">
+              <div class="gen-top">
+                <div class="flg"></div>
+                <div class="gen-title">МОНГОЛ УЛСЫН ИРГЭНИЙ ҮНЭМЛЭХ<span>CITIZEN IDENTITY CARD OF MONGOLIA</span></div>
+              </div>
+              <div class="gen-body">
+                <img class="gen-photo" class="mp-4" style="display:none" alt=""/>
+                <div class="gen-photo mpph" style="display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="22" height="22" fill="#bbb"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div>
+                <div class="gen-fields">
+                  <div class="gl">Овог Family name</div><div class="gv">Бат</div>
+                  <div class="gl">Эцэг/ эх /-ийн нэр Surname</div><div class="gv">Болдбаатар</div>
+                  <div class="gl">Нэр Given name</div><div class="gv">БОЛД</div>
+                  <div class="gl">Хүйс Sex</div><div class="gv">Эрэгтэй</div>
+                  <div class="gl">Төрсөн он, сар өдөр</div><div class="gv">1995/05/15</div>
+                  <div class="gl">Иргэний бүртгэлийн дугаар</div><div class="gv">УБ95051512</div>
+                </div>
+              </div>
+              <svg class="sec-strip" viewBox="0 0 40 120" fill="none"><rect x="8" y="4" width="24" height="112" rx="4" stroke="#1e3a8a" stroke-width="2.5"/><path d="M14 20h12M14 28h12M14 36h12M14 48h12M14 56h12M14 64h12M14 76h12M14 84h12M14 92h12" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round"/></svg>
+              <svg class="map-icon" viewBox="0 0 40 28" fill="#166534"><path d="M2 14c2-4 6-8 12-9 4-1 8 0 12 2 3 1 6 3 8 6 1 2 2 5 1 7-2 3-6 4-10 4-5 0-9-1-13-3-4-2-7-4-10-7z"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="btn-all" onclick="openId()" onclick="openId()">Бүх бичиг баримтыг харах</button>
+    </div>
+    <div class="ml">
+      <button class="mi" onclick="openDetail('Төрд байгаа миний мэдээлэл')"><div class="mic" style="background:#FFF1E8"><svg viewBox="0 0 48 48" width="30" height="30"><defs><linearGradient id="f1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FB923C"/><stop offset="1" stop-color="#EA580C"/></linearGradient></defs><path d="M8 14h28a3 3 0 013 3v20a3 3 0 01-3 3H8a3 3 0 01-3-3V17a3 3 0 013-3z" fill="url(#f1)"/><path d="M14 14V12a4 4 0 014-4h8a4 4 0 014 4v2" stroke="#FDBA74" stroke-width="2.5" fill="none"/><circle cx="28" cy="28" r="7" fill="#FED7AA"/><circle cx="28" cy="26" r="3.5" fill="#EA580C"/><path d="M22 36c0-3.5 2.7-6 6-6s6 2.5 6 6" fill="#EA580C"/></svg></div><div class="mit">Төрд байгаа миний мэдээлэл</div><span class="ch">›</span></button>
+      <button class="mi" onclick="openDetail('Цахим хэтэвч')"><div class="mic" style="background:#EFF6FF"><svg viewBox="0 0 48 48" width="30" height="30"><defs><linearGradient id="w1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#60A5FA"/><stop offset="1" stop-color="#2563EB"/></linearGradient></defs><rect x="6" y="14" width="36" height="24" rx="5" fill="url(#w1)"/><rect x="6" y="14" width="36" height="8" rx="2" fill="#1E3A8A" opacity=".3"/><circle cx="34" cy="30" r="3" fill="#fff" opacity=".9"/><path d="M10 12h20a3 3 0 013 3v2H10v-5z" fill="#1E293B"/></svg></div><div class="mit">Цахим хэтэвч</div><span class="ch">›</span></button>
+      <button class="mi" onclick="openDetail('Үйлчилгээний түүх')"><div class="mic" style="background:#F0F9FF"><svg viewBox="0 0 48 48" width="30" height="30"><rect x="10" y="6" width="24" height="32" rx="3" fill="#fff" stroke="#CBD5E1" stroke-width="1.5"/><path d="M10 6h16l8 8v24a3 3 0 01-3 3H13a3 3 0 01-3-3V6z" fill="#F8FAFC"/><path d="M26 6v8h8" fill="#E2E8F0"/><path d="M16 22h14M16 28h10" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/><circle cx="34" cy="34" r="10" fill="#3B82F6"/><path d="M34 29v6l4 2" stroke="#fff" stroke-width="2" stroke-linecap="round" fill="none"/></svg></div><div class="mit">Үйлчилгээний түүх</div><span class="ch">›</span></button>
+      <button class="mi" onclick="openDetail('Үндэсний шуудан')"><div class="mic" style="background:#FFF7ED"><svg viewBox="0 0 48 48" width="30" height="30"><path d="M6 18l18-10 18 10v18a3 3 0 01-3 3H9a3 3 0 01-3-3V18z" fill="#F97316"/><path d="M6 18l18 12 18-12" fill="#FED7AA"/><rect x="16" y="14" width="16" height="14" rx="1.5" fill="#fff"/><path d="M19 19h10M19 23h8" stroke="#FB923C" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="mit">Үндэсний шуудан</div><span class="ch">›</span></button>
+      <button class="mi" onclick="openDetail('Талархал')"><div class="mic" style="background:#F5F3FF"><svg viewBox="0 0 48 48" width="30" height="30"><rect x="8" y="10" width="32" height="26" rx="4" fill="#7C3AED"/><rect x="12" y="14" width="24" height="18" rx="2" fill="#EDE9FE"/><path d="M16 20h16M16 25h12" stroke="#A78BFA" stroke-width="2" stroke-linecap="round"/><circle cx="36" cy="34" r="7" fill="#F59E0B"/><path d="M36 30v5M33.5 32.5h5" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="mit">Талархал</div><span class="ch">›</span></button>
+      <button class="mi" onclick="openDetail('Санал асуулга')"><div class="mic" style="background:#EFF6FF"><svg viewBox="0 0 48 48" width="30" height="30"><path d="M12 6h18l8 8v26a3 3 0 01-3 3H12a3 3 0 01-3-3V9a3 3 0 013-3z" fill="#3B82F6"/><path d="M30 6v8h8" fill="#93C5FD"/><path d="M16 22h14M16 28h10M16 34h12" stroke="#fff" stroke-width="2" stroke-linecap="round"/><circle cx="34" cy="34" r="9" fill="#22C55E"/><path d="M30 34l3 3 6-6" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><div class="mit">Санал асуулга</div><span class="ch">›</span></button>
+      <button class="mi" onclick="openDetail('Өргөдөл, гомдол')"><div class="mic" style="background:#EFF6FF"><svg viewBox="0 0 48 48" width="30" height="30"><path d="M12 6h18l8 8v26a3 3 0 01-3 3H12a3 3 0 01-3-3V9a3 3 0 013-3z" fill="#3B82F6"/><path d="M30 6v8h8" fill="#93C5FD"/><path d="M16 22h14M16 28h10" stroke="#fff" stroke-width="2" stroke-linecap="round"/><circle cx="34" cy="34" r="9" fill="#F97316"/><path d="M34 30v5M34 38v1" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></div><div class="mit">Өргөдөл, гомдол</div><span class="ch">›</span></button>
+      <button class="mi" onclick="openDetail('Эрсдэлийн түүх')"><div class="mic" style="background:#F8FAFC"><svg viewBox="0 0 48 48" width="30" height="30"><path d="M12 6h18l8 8v26a3 3 0 01-3 3H12a3 3 0 01-3-3V9a3 3 0 013-3z" fill="#F1F5F9"/><path d="M30 6v8h8" fill="#E2E8F0"/><path d="M16 22h14M16 28h10M16 34h12" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/><circle cx="34" cy="34" r="9" fill="#EF4444"/><path d="M34 30v5M34 38v1" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><path d="M34 29l.01 0" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div><div class="mit">Эрсдэлийн түүх</div><span class="ch">›</span></button>
+      <button class="mi" onclick="openDetail('Баталгаажуулалт')"><div class="mic" style="background:#EFF6FF"><svg viewBox="0 0 48 48" width="30" height="30"><defs><linearGradient id="sh1" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#60A5FA"/><stop offset="1" stop-color="#2563EB"/></linearGradient></defs><path d="M24 6l16 6v12c0 10-7 16-16 20C15 40 8 34 8 24V12l16-6z" fill="url(#sh1)"/><path d="M18 24l5 5 9-10" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><div class="mit">Баталгаажуулалт</div><span class="ch">›</span></button>
+      <button class="mi" onclick="logout()" style="margin-top:8px"><div class="mic" style="background:#FEF2F2"><svg viewBox="0 0 48 48" width="30" height="30"><path d="M14 8h16a4 4 0 014 4v24a4 4 0 01-4 4H14a4 4 0 01-4-4V12a4 4 0 014-4z" fill="#F87171"/><path d="M14 8h16a4 4 0 014 4v4H10v-4a4 4 0 014-4z" fill="#DC2626"/><path d="M28 24h14M36 18l6 6-6 6" stroke="#1E293B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><div class="mit" style="color:#DC2626">Системээс гарах</div><span class="ch">›</span></button>
+    </div>
+  </div><!-- /p-profile -->
+</div><!-- /sc -->
+
+<nav class="bn" id="bn" style="display:none">
+  <button class="nb" data-t="home" onclick="go('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1v-9.5z"/></svg><span>Нүүр</span></button>
+  <button class="nb" data-t="services" onclick="go('services')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg><span>Үйлчилгээ</span></button>
+  <button class="nq" onclick="openQR()"><svg viewBox="0 0 24 24" fill="#fff" width="24" height="24"><path d="M3 3h7v7H3V3zm2 2v3h3V5H5zm9-2h7v7h-7V3zm2 2v3h3V5h-3zM3 14h7v7H3v-7zm2 2v3h3v-3H5zm11-2h1v2h-1v-2zm3 0h2v1h-2v-1zm-3 3h1v1h-1v-1zm2 0h3v3h-1v-2h-2v-1zm-2 2h1v2h-1v-2zm3 1h2v2h-2v-2z"/></svg></button>
+  <button class="nb" data-t="extra" onclick="go('extra')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h4v4H4zM10 6h4v4h-4zM16 6h4v4h-4zM4 12h4v4H4zM10 12h4v4h-4zM16 12h4v4h-4zM4 18h4v4H4zM10 18h4v4h-4zM16 18h4v4h-4z"/></svg><span>Нэмэлт</span></button>
+  <button class="nb" data-t="profile" onclick="go('profile')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Профайл</span></button>
+</nav>
+
+    
+<!-- EDIT -->
+<div class="ov" id="edo">
+  <div class="sheet">
+    <div class="shd"></div>
+    <h3>Мэдээлэл засах</h3>
+    <div class="pr">
+      <img id="epv" class="ppv" src="" alt=""/>
+      <button class="ub" onclick="pickFace()">Зураг солих</button>
+    </div>
+    <div class="fg"><label>Профайл нэр</label><input id="en" type="text"/></div>
+    <div class="fg"><label>И-мэйл</label><input id="ee" type="text"/></div>
+    <div class="fg"><label>Овог</label><input id="ef" type="text"/></div>
+    <div class="fg"><label>Эцэг/эхийн нэр</label><input id="es" type="text"/></div>
+    <div class="fg"><label>Нэр</label><input id="eg" type="text"/></div>
+    <div class="fg"><label>Хүйс</label><select id="ex"><option value="">—</option><option value="Эрэгтэй">Эрэгтэй</option><option value="Эмэгтэй">Эмэгтэй</option></select></div>
+    <div class="fg"><label>Төрсөн огноо</label><input id="ed" type="text" placeholder="2000-02-27"/></div>
+    <div class="fg"><label>Регистр</label><input id="er" type="text"/></div>
+    <div class="fg"><label>Олгосон</label><input id="ei" type="text"/></div>
+    <div class="fg"><label>Хүчинтэй</label><input id="ey" type="text"/></div>
+    <div class="fg"><label>Бүтэн урд тал (ID зураг)</label><button class="ub" style="width:100%" onclick="pickCard('front')">Урд тал оруулах</button></div>
+    <div class="fg"><label>Бүтэн ард тал (ID зураг)</label><button class="ub" style="width:100%" onclick="pickCard('back')">Ард тал оруулах</button></div>
+    <button class="bp" onclick="saveE()">Хадгалах</button>
+    <button class="bx" onclick="closeE()">Хаах</button>
+  </div>
+</div>
+
+</div></div>
+<input type="file" id="fi" accept="image/*" onchange="onP(event)"/>
+<input type="file" id="fi-front" accept="image/*" onchange="onCard(event,'front')"/>
+<input type="file" id="fi-back" accept="image/*" onchange="onCard(event,'back')"/>
+<div class="toast" id="to"></div>
+</div>
+<script>
+
+const K="emongolia_v10";
+const D={name:"Б.Болд",email:"user@e-mongolia.mn",family:"Бат",surname:"Болдбаатар",given:"БОЛД",sex:"Эрэгтэй",dob:"1995/05/15",reg:"УБ95051512",issue:"2022-03-20",expiry:"2032-03-20",photo:"",idFront:"",idBack:""};
+
+function loadData(){
+  var d = Object.assign({}, D);
+  try{
+    var meta = localStorage.getItem(K+"_meta");
+    if(meta){
+      var parsed = JSON.parse(meta);
+      Object.keys(parsed).forEach(function(k){ d[k]=parsed[k]; });
+    }
+  }catch(e){ console.warn("meta load", e); }
+  // images separate (may fail on quota - ok)
+  try{
+    var p = localStorage.getItem(K+"_photo"); if(p) d.photo=p;
+  }catch(e){}
+  try{
+    var f = localStorage.getItem(K+"_front"); if(f) d.idFront=f;
+  }catch(e){}
+  try{
+    var b = localStorage.getItem(K+"_back"); if(b) d.idBack=b;
+  }catch(e){}
+  // session backup
+  try{
+    if(!d.photo){ var sp=sessionStorage.getItem(K+"_photo"); if(sp) d.photo=sp; }
+    if(!d.idFront){ var sf=sessionStorage.getItem(K+"_front"); if(sf) d.idFront=sf; }
+    if(!d.idBack){ var sb=sessionStorage.getItem(K+"_back"); if(sb) d.idBack=sb; }
+  }catch(e){}
+  return d;
+}
+
+var data = loadData();
+var pin="", flipped=false;
+
+function persist(){
+  // Always save text fields (small) - this MUST work
+  var meta = {
+    name: data.name||"",
+    email: data.email||"",
+    family: data.family||"",
+    surname: data.surname||"",
+    given: data.given||"",
+    sex: data.sex||"",
+    dob: data.dob||"",
+    reg: data.reg||"",
+    issue: data.issue||"",
+    expiry: data.expiry||""
+  };
+  try{
+    localStorage.setItem(K+"_meta", JSON.stringify(meta));
+  }catch(e){
+    console.error("meta save fail", e);
+    return false;
+  }
+  // Verify write
+  try{
+    var check = localStorage.getItem(K+"_meta");
+    if(!check) return false;
+  }catch(e){ return false; }
+
+  // Images best-effort
+  function saveImg(key, val){
+    if(!val) return;
+    try{ localStorage.setItem(key, val); }catch(e){
+      try{ sessionStorage.setItem(key, val); }catch(e2){}
+    }
+    try{ sessionStorage.setItem(key, val); }catch(e){}
+  }
+  saveImg(K+"_photo", data.photo);
+  saveImg(K+"_front", data.idFront);
+  saveImg(K+"_back", data.idBack);
+  return true;
+}
+
+document.getElementById("kp").addEventListener("click",e=>{
+  const b=e.target.closest(".k");if(!b)return;const n=b.dataset.n;
+  if(n==="b")pin=pin.slice(0,-1);else if(n!=null&&pin.length<4)pin+=n;
+  document.querySelectorAll(".pdo").forEach((d,i)=>{d.classList.remove("on","f");d.textContent="";if(i<pin.length){d.classList.add("f");d.textContent=pin[i]}else if(i===pin.length)d.classList.add("on")});
+  if(pin.length===4)setTimeout(login,160);
+});
+function login(){
+  try{
+    document.getElementById("pin").classList.add("hid");
+    var hd=document.getElementById("hd");if(hd)hd.style.display="flex";
+    var sc=document.getElementById("sc");if(sc)sc.style.display="block";
+    var bn=document.getElementById("bn");if(bn)bn.style.display="flex";
+    sessionStorage.setItem("em7","1");
+    try{if(typeof render==="function")render()}catch(e){console.log(e)}
+    try{syncCarouselFromData()}catch(e){}
+  }catch(e){console.error(e);alert("Login error: "+e.message)}
+}
+function logout(){
+  sessionStorage.removeItem("em7");
+  sessionStorage.removeItem("lock_face");
+  sessionStorage.removeItem("lock_front");
+  sessionStorage.removeItem("lock_back");
+  document.getElementById("pin").classList.remove("hid");
+  document.getElementById("hd").style.display="none";
+  document.getElementById("sc").style.display="none";
+  document.getElementById("bn").style.display="none";
+  pin="";document.querySelectorAll(".pdo").forEach((d,i)=>{d.classList.remove("on","f");d.textContent="";if(i===0)d.classList.add("on")});
+}
+if(sessionStorage.getItem("em7")==="1")login();
+
+function go(t){
+  document.querySelectorAll(".pg").forEach(s=>s.classList.remove("on"));
+  const el=document.getElementById("p-"+t);if(el)el.classList.add("on");
+  document.querySelectorAll(".nb").forEach(b=>b.classList.toggle("on",b.dataset.t===t));
+  if(t==="profile"){
+    var w=document.getElementById("id-wrap");
+    if(w){w._inited=false;try{initIdCarousel()}catch(e){}}
+  }
+}
+function setV(id,v){const el=document.getElementById(id);if(!el)return;if(v){el.textContent=v;el.classList.remove("e")}else{el.textContent="---";el.classList.add("e")}}
+function setT(id,v){const el=document.getElementById(id);if(el)el.textContent=v||"---"}
+
+function render(){
+  try{initIdCarousel()}catch(e){}
+
+  document.getElementById("pn").textContent=data.name;
+  document.getElementById("pe").textContent=data.email;
+  var _qn=document.getElementById("qr-name"); if(_qn)_qn.textContent=data.name;
+  var _qe=document.getElementById("qr-email"); if(_qe)_qe.textContent=data.email;
+  const img=document.getElementById("pimg"),ph=document.getElementById("pph");
+  const idp=document.getElementById("idp"),idph=document.getElementById("idph");
+  const mp=document.getElementById("mp"),mpPh=document.getElementById("mp-ph");
+  const ep=document.getElementById("epv");
+  const thumbFull=document.getElementById("id-thumb-full"),thumbGen=document.getElementById("id-thumb-gen");
+
+  if(data.photo){
+    if(img){img.src=data.photo;img.style.display="block"}
+    if(ph)ph.style.display="none";
+    if(idp){idp.src=data.photo;idp.style.display="block"}
+    if(idph)idph.style.display="none";
+    if(ep)ep.src=data.photo;
+  }else{
+    if(img)img.style.display="none";
+    if(ph)ph.style.display="flex";
+    if(idp)idp.style.display="none";
+    if(idph)idph.style.display="flex";
+  }
+  // sync all carousel cards
+  document.querySelectorAll(".id-preview").forEach(function(card){
+    var full=card.querySelector("img.full");
+    var gen=card.querySelector(".gen");
+    var gphoto=card.querySelector("img.gen-photo");
+    var gph=card.querySelector(".mpph, #mp-ph");
+    if(data.idFront&&full&&gen){
+      full.src=data.idFront;full.style.display="block";
+      if(gen)gen.style.display="none";
+    }else if(full&&gen){
+      full.style.display="none";
+      if(gen)gen.style.display="block";
+    }
+    if(data.photo&&gphoto){
+      gphoto.src=data.photo;gphoto.style.display="block";
+      if(gph)gph.style.display="none";
+    }else if(gphoto){
+      gphoto.style.display="none";
+      if(gph)gph.style.display="flex";
+    }
+  });
+  // also sync field texts on non-main cards
+  document.querySelectorAll(".id-preview:not(#id-preview) .gen-fields").forEach(function(ff){
+    var gvs=ff.querySelectorAll(".gv");
+    if(gvs.length>=6){
+      gvs[0].textContent=data.family||"Бат";
+      gvs[1].textContent=data.surname||"Болдбаатар";
+      gvs[2].textContent=data.given||"БОЛД";
+      gvs[3].textContent=data.sex||"Эрэгтэй";
+      gvs[4].textContent=data.dob||"1995/05/15";
+      gvs[5].textContent=data.reg||"УБ95051512";
+    }
+  });
+  setV("ff",data.family);setV("fs",data.surname);setV("fg",data.given);setV("fx",data.sex);setV("fd",data.dob);setV("fr",data.reg);
+  setT("tf",data.family);setT("ts",data.surname);setT("tg",data.given);setT("tx",data.sex);setT("td",data.dob);setT("tr",data.reg);
+  document.getElementById("bi").textContent=data.issue||"---";
+  document.getElementById("be").textContent=data.expiry||"---";
+}
+
+function onP(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{data.photo=ev.target.result;sessionStorage.setItem("lock_face","1");persist();render();toast("Зураг хадгалагдлаа ✓")};r.readAsDataURL(f);e.target.value=""}
+function onCard(e,side){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{if(side==="front"){data.idFront=ev.target.result;sessionStorage.setItem("lock_front","1")}else{data.idBack=ev.target.result;sessionStorage.setItem("lock_back","1")}persist();render();showIdSide();toast(side==="front"?"Урд тал хадгалагдлаа ✓":"Ард тал хадгалагдлаа ✓")};r.readAsDataURL(f);e.target.value=""}
+
+function pickFace(){
+  if(sessionStorage.getItem("lock_face")==="1"&&data.photo){toast("Түгжигдсэн. App-аас гарч орж солино");return}
+  document.getElementById("fi").click();
+}
+function pickCard(side){
+  if(side==="front"){
+    if(sessionStorage.getItem("lock_front")==="1"&&data.idFront){toast("Түгжигдсэн. App-аас гарч орж солино");return}
+    document.getElementById("fi-front").click();
+  }else{
+    if(sessionStorage.getItem("lock_back")==="1"&&data.idBack){toast("Түгжигдсэн. App-аас гарч орж солино");return}
+    document.getElementById("fi-back").click();
+  }
+}
+
+function openId_legacy(){flipped=false;showIdSide();var el=document.getElementById("ido");if(el)el.classList.add("sh")}
+function closeId(){document.getElementById("ido").classList.remove("sh")}
+function onIdTap(){
+  const hasFront=!!data.idFront, hasBack=!!data.idBack;
+  const lockF=sessionStorage.getItem("lock_front")==="1";
+  const lockB=sessionStorage.getItem("lock_back")==="1";
+  // Both set (or both locked): only toggle
+  if(hasFront && hasBack){
+    flipped=!flipped;showIdSide();return;
+  }
+  // Currently showing front
+  if(!flipped){
+    if(!hasFront){ pickCard("front"); return; }
+    // front exists, go to back side
+    flipped=true;showIdSide();
+    // if back not set yet, open picker for back
+    if(!hasBack && lockB!==true){ setTimeout(()=>pickCard("back"), 200); }
+    return;
+  }
+  // Currently showing back
+  if(!hasBack){ pickCard("back"); return; }
+  // back exists, go to front
+  flipped=false;showIdSide();
+}
+function showIdSide(){
+  const genF=document.getElementById("idf"),genB=document.getElementById("idb");
+  const custF=document.getElementById("id-custom-front"),custB=document.getElementById("id-custom-back");
+  if(!flipped){
+    if(data.idFront){custF.src=data.idFront;custF.style.display="block";genF.style.display="none";custB.style.display="none";genB.style.display="none"}
+    else{custF.style.display="none";genF.style.display="block";custB.style.display="none";genB.style.display="none"}
+  }else{
+    if(data.idBack){custB.src=data.idBack;custB.style.display="block";genB.style.display="none";custF.style.display="none";genF.style.display="none"}
+    else{custB.style.display="none";genB.style.display="block";custF.style.display="none";genF.style.display="none"}
+  }
+}
+
+function openEdit(){
+  document.getElementById("en").value=data.name;document.getElementById("ee").value=data.email;
+  document.getElementById("ef").value=data.family;document.getElementById("es").value=data.surname;
+  document.getElementById("eg").value=data.given;document.getElementById("ex").value=data.sex;
+  document.getElementById("ed").value=data.dob;document.getElementById("er").value=data.reg;
+  document.getElementById("ei").value=data.issue;document.getElementById("ey").value=data.expiry;
+  document.getElementById("epv").src=data.photo||"";document.getElementById("edo").classList.add("sh");
+}
+function closeE(){document.getElementById("edo").classList.remove("sh")}
+function saveE(){
+  try{
+    var en=document.getElementById("en");
+    var ee=document.getElementById("ee");
+    var ef=document.getElementById("ef");
+    var es=document.getElementById("es");
+    var eg=document.getElementById("eg");
+    var ex=document.getElementById("ex");
+    var ed=document.getElementById("ed");
+    var er=document.getElementById("er");
+    var ei=document.getElementById("ei");
+    var ey=document.getElementById("ey");
+    if(en) data.name = en.value.trim() || data.name;
+    if(ee) data.email = ee.value.trim() || data.email;
+    if(ef) data.family = ef.value.trim();
+    if(es) data.surname = es.value.trim();
+    if(eg) data.given = eg.value.trim();
+    if(ex) data.sex = ex.value;
+    if(ed) data.dob = ed.value.trim();
+    if(er) data.reg = er.value.trim();
+    if(ei) data.issue = ei.value.trim() || data.issue;
+    if(ey) data.expiry = ey.value.trim() || data.expiry;
+    var ok = persist();
+    try{ render(); }catch(e){}
+    // QR
+    var qn=document.getElementById("qr-name"); if(qn) qn.textContent=data.name;
+    var qe=document.getElementById("qr-email"); if(qe) qe.textContent=data.email;
+    // profile header
+    var pn=document.getElementById("pn"); if(pn) pn.textContent=data.name;
+    var pe=document.getElementById("pe"); if(pe) pe.textContent=data.email;
+    closeE();
+    toast(ok ? "Хадгалагдлаа ✓" : "Хадгалсан (зураг том байж магад)");
+  }catch(err){
+    toast("Алдаа: "+err.message);
+  }
+}
+function toast(m){const t=document.getElementById("to");t.textContent=m;t.classList.add("on");setTimeout(()=>t.classList.remove("on"),1800)}
+document.getElementById("ido").addEventListener("click",e=>{if(e.target.id==="ido")closeId()});
+document.getElementById("edo").addEventListener("click",e=>{if(e.target.id==="edo")closeE()});
+
+function initIdCarousel(){
+  var wrap=document.getElementById("id-wrap");
+  var track=document.getElementById("id-carousel");
+  if(!wrap||!track||wrap._inited)return;
+  // only init when visible
+  if(wrap.offsetWidth<50)return;
+  wrap._inited=true;
+  var cards=track.querySelectorAll(".id-preview");
+  var n=cards.length;
+  if(n<3)return;
+  var idx=2; // start at middle
+  var startX=0,curX=0,dragging=false,baseX=0;
+
+  function cardW(){
+    return cards[0].offsetWidth+12;
+  }
+  function go(i,anim){
+    idx=((i%n)+n)%n;
+    var x=-idx*cardW()+((wrap.offsetWidth-cards[0].offsetWidth)/2);
+    track.style.transition=anim?"transform .35s cubic-bezier(.25,.8,.25,1)":"none";
+    track.style.transform="translate3d("+x+"px,0,0)";
+  }
+  go(idx,false);
+
+  wrap.addEventListener("touchstart",function(e){
+    dragging=true;
+    startX=e.touches[0].clientX;
+    curX=startX;
+    baseX=-idx*cardW()+((wrap.offsetWidth-cards[0].offsetWidth)/2);
+    track.style.transition="none";
+  },{passive:true});
+
+  wrap.addEventListener("touchmove",function(e){
+    if(!dragging)return;
+    curX=e.touches[0].clientX;
+    var dx=curX-startX;
+    track.style.transform="translate3d("+(baseX+dx)+"px,0,0)";
+  },{passive:true});
+
+  wrap.addEventListener("touchend",function(){
+    if(!dragging)return;
+    dragging=false;
+    var dx=curX-startX;
+    var threshold=40;
+    if(dx<-threshold) go(idx+1,true);
+    else if(dx>threshold) go(idx-1,true);
+    else go(idx,true);
+  });
+
+  // mouse support for desktop testing
+  wrap.addEventListener("mousedown",function(e){
+    dragging=true;startX=e.clientX;curX=startX;
+    baseX=-idx*cardW()+((wrap.offsetWidth-cards[0].offsetWidth)/2);
+    track.style.transition="none";e.preventDefault();
+  });
+  window.addEventListener("mousemove",function(e){
+    if(!dragging)return;curX=e.clientX;
+    track.style.transform="translate3d("+(baseX+(curX-startX))+"px,0,0)";
+  });
+  window.addEventListener("mouseup",function(){
+    if(!dragging)return;dragging=false;
+    var dx=curX-startX;
+    if(dx<-40) go(idx+1,true);
+    else if(dx>40) go(idx-1,true);
+    else go(idx,true);
+  });
+
+  window.addEventListener("resize",function(){go(idx,false)});
+}
+document.addEventListener("DOMContentLoaded",initIdCarousel);
+// also after login
+var _oldLogin=typeof login==="function"?login:null;
+
+
+function hideChrome(){var h=document.querySelector(".hd");var b=document.getElementById("bn");if(h)h.style.visibility="hidden";if(b)b.style.visibility="hidden"}
+function showChrome(){var h=document.querySelector(".hd");var b=document.getElementById("bn");if(h)h.style.visibility="";if(b)b.style.visibility=""}
+function openNotif(){document.getElementById("ov-notif").classList.add("on");hideChrome()}
+function openMenu(){document.getElementById("menu-mask").classList.add("on");document.getElementById("menu-drawer").classList.add("on")}
+function closeMenu(){document.getElementById("menu-mask").classList.remove("on");document.getElementById("menu-drawer").classList.remove("on")}
+function closeOv(){document.querySelectorAll(".page-ov").forEach(function(o){o.classList.remove("on")});showChrome()}
+function switchNTab(el){document.querySelectorAll(".n-tab").forEach(function(t){t.classList.remove("on")});el.classList.add("on")}
+function toggleDark(){
+  var k=document.getElementById("dark-knob");
+  var on=k.style.left==="23px";
+  k.style.left=on?"3px":"23px";
+  document.getElementById("menu-drawer").style.background=on?"#fff":"#1e293b";
+  document.getElementById("menu-drawer").style.color=on?"#1e293b":"#f1f5f9";
+  document.querySelectorAll(".menu-item").forEach(function(m){m.style.color=on?"#1e293b":"#f1f5f9"});
+}
+function openAI(){document.getElementById("ov-ai").classList.add("on");hideChrome()}
+function openWeather(){document.getElementById("ov-weather").classList.add("on");hideChrome()}
+
+
+function openDetail(title, htmlContent){
+  document.getElementById("detail-title").textContent=title;
+  document.getElementById("detail-body").innerHTML=htmlContent||defaultDetail(title);
+  document.getElementById("ov-detail").classList.add("on");hideChrome();
+}
+function defaultDetail(title){
+  return '<div style="background:#fff;border-radius:16px;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,.05)">'+
+    '<div style="font-size:16px;font-weight:700;margin-bottom:8px">'+title+'</div>'+
+    '<div style="font-size:13px;color:#64748b;line-height:1.5;margin-bottom:16px">Энэ хэсэгт '+title+' үйлчилгээний дэлгэрэнгүй мэдээлэл харагдана.</div>'+
+    '<div style="background:#f8fafc;border-radius:12px;padding:14px;margin-bottom:12px">'+
+      '<div style="font-size:12px;color:#94a3b8;margin-bottom:4px">Төлөв</div>'+
+      '<div style="font-size:14px;font-weight:600;color:#16a34a">✓ Идэвхтэй</div></div>'+
+    '<div style="background:#f8fafc;border-radius:12px;padding:14px;margin-bottom:12px">'+
+      '<div style="font-size:12px;color:#94a3b8;margin-bottom:4px">Сүүлд шинэчилсэн</div>'+
+      '<div style="font-size:14px;font-weight:600">2026-10-19</div></div>'+
+    '<button onclick="toast(\'Үйлчилгээ эхлүүллээ\')" style="width:100%;padding:14px;border:none;border-radius:12px;background:#0066FF;color:#fff;font-size:15px;font-weight:600;cursor:pointer;margin-top:8px">Үйлчилгээ авах</button>'+
+  '</div>';
+}
+function openQR(){document.getElementById("ov-qr").classList.add("on");hideChrome()}
+
+function flipIdFull(){
+  var f=document.getElementById("id-full-front");
+  var b=document.getElementById("id-full-back");
+  if(f.style.display==="none"){f.style.display="block";b.style.display="none"}
+  else{f.style.display="none";b.style.display="block"}
+}
+function guidePage(name){
+  openDetail(name, '<div style="background:#fff;border-radius:16px;padding:20px;margin-bottom:12px">'+
+    '<div style="font-size:18px;font-weight:700;margin-bottom:4px">'+name+'</div>'+
+    '<div style="font-size:12px;color:#94a3b8;margin-bottom:12px">Хөтөч үзүүлсэн байгууллага</div>'+
+    '<div style="font-size:14px;font-weight:600;margin-bottom:4px">Батлан хамгаалах яам</div>'+
+    '<div style="font-size:12px;color:#64748b;margin-bottom:16px">Сүүлд шинэчилсэн огноо: 2025/09/20</div>'+
+    '<div style="border-top:1px solid #f1f5f9;padding-top:12px;margin-bottom:12px">'+
+      '<div style="font-size:13px;font-weight:600;margin-bottom:8px">Хөтчийн агуулга</div>'+
+      '<div style="display:flex;flex-wrap:wrap;gap:8px">'+
+        '<span style="background:#eff6ff;color:#0066FF;padding:6px 12px;border-radius:20px;font-size:12px">✦ Асуудал тодорхойлох асуулт</span>'+
+        '<span style="background:#f0fdf4;color:#16a34a;padding:6px 12px;border-radius:20px;font-size:12px">✦ Хууль эрх зүй</span>'+
+        '<span style="background:#fef3c7;color:#d97706;padding:6px 12px;border-radius:20px;font-size:12px">✦ Холбоотой үйлчилгээ</span>'+
+      '</div></div></div>'+
+    '<div style="background:#fff;border-radius:16px;padding:20px;margin-bottom:12px">'+
+      '<div style="font-size:28px;margin-bottom:8px">✨</div>'+
+      '<div style="font-size:16px;font-weight:700;margin-bottom:8px">Асуудал тодорхойлох асуулт</div>'+
+      '<div style="font-size:13px;color:#64748b;line-height:1.5;margin-bottom:16px">Бид таны нөхцөл байдлыг үнэлж, хэрэгцээнд чинь нийцсэн үйлчилгээ, мэдээлэл санал болгох болно.</div>'+
+      '<button onclick="toast(\'Асуулга эхэллээ\')" style="width:100%;padding:14px;border:none;border-radius:12px;background:#0066FF;color:#fff;font-weight:600;cursor:pointer">Асуулга эхлүүлэх</button>'+
+    '</div>');
+}
+
+
+function openId(){
+  try{
+    if(typeof data!=="undefined"){
+      var m={"idf-family":data.family,"idf-surname":data.surname,"idf-given":data.given,"idf-sex":data.sex,"idf-dob":data.dob,"idf-reg":data.reg};
+      for(var k in m){var el=document.getElementById(k);if(el&&m[k])el.textContent=m[k]}
+      if(data.photo){var img=document.getElementById("id-full-photo");if(img){img.src=data.photo;img.style.display="block"}
+        var ph=document.getElementById("id-full-ph");if(ph)ph.style.display="none"}
+      if(data.idBack){var b=document.getElementById("id-full-back-img");if(b){b.src=data.idBack;b.style.display="block"}
+        var bp=document.getElementById("id-full-back-ph");if(bp)bp.style.display="none"}
+    }
+  }catch(e){}
+  var f=document.getElementById("id-full-front");var bk=document.getElementById("id-full-back");
+  if(f)f.style.display="block";if(bk)bk.style.display="none";
+  document.getElementById("ov-id").classList.add("on");hideChrome();
+}
+
+
+function openId(){
+  try{
+    if(typeof data!=="undefined"){
+      var m={"idf-family":data.family,"idf-surname":data.surname,"idf-given":data.given,"idf-sex":data.sex,"idf-dob":data.dob,"idf-reg":data.reg};
+      for(var k in m){var el=document.getElementById(k);if(el&&m[k])el.textContent=m[k]}
+      if(data.photo){var img=document.getElementById("id-full-photo");if(img){img.src=data.photo;img.style.display="block"}
+        var ph=document.getElementById("id-full-ph");if(ph)ph.style.display="none"}
+    }
+  }catch(e){}
+  var f=document.getElementById("id-full-front");var bk=document.getElementById("id-full-back");
+  if(f)f.style.display="block";if(bk)bk.style.display="none";
+  document.getElementById("ov-id").classList.add("on");hideChrome();
+}
+function flipIdFull(){
+  var f=document.getElementById("id-full-front");
+  var b=document.getElementById("id-full-back");
+  if(!f||!b)return;
+  if(f.style.display==="none"){f.style.display="block";b.style.display="none"}
+  else{f.style.display="none";b.style.display="block"}
+}
+
+
+function flipIdFull(){
+  var f=document.getElementById("id-full-front");
+  var b=document.getElementById("id-full-back");
+  if(!f||!b)return;
+  if(f.style.display==="none"){f.style.display="block";b.style.display="none"}
+  else{f.style.display="none";b.style.display="block"}
+}
+function pickIdPhoto(side){
+  if(sessionStorage.getItem("idLock_"+side)==="1"){
+    toast("Зураг түгжигдсэн. App-аас гарч орвол дахин солино");
+    return;
+  }
+  var inp=document.getElementById(side==="front"?"fi-id-front":"fi-id-back");
+  if(inp)inp.click();
+}
+function onIdFile(e,side){
+  var file=e.target.files&&e.target.files[0];
+  if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(ev){
+    var url=ev.target.result;
+    try{
+      if(typeof data==="undefined")window.data={};
+      if(side==="front"){
+        data.idFront=url;data.photo=url;
+        var full=document.getElementById("id-front-full");
+        var face=document.getElementById("id-full-photo");
+        var ph=document.getElementById("id-full-ph");
+        var hint=document.getElementById("id-front-hint");
+        if(full){full.src=url;full.style.display="block"}
+        if(face){face.src=url;face.style.display="block"}
+        if(ph)ph.style.display="none";
+        if(hint)hint.style.display="none";
+        var av=document.getElementById("av-img");
+        if(av){av.src=url;av.style.display="block"}
+      }else{
+        data.idBack=url;
+        var full=document.getElementById("id-back-full");
+        var hint=document.getElementById("id-back-hint");
+        if(full){full.src=url;full.style.display="block"}
+        if(hint)hint.style.display="none";
+      }
+      localStorage.setItem("emongolia_data",JSON.stringify(data));
+      sessionStorage.setItem("idLock_"+side,"1");
+      syncIdToCarousel();
+      toast(side==="front"?"Урд тал хадгалагдлаа":"Ар тал хадгалагдлаа");
+    }catch(err){toast("Алдаа")}
+  };
+  reader.readAsDataURL(file);
+  e.target.value="";
+}
+function syncIdToCarousel(){
+  try{
+    if(typeof data==="undefined"||!data.idFront)return;
+    document.querySelectorAll(".id-card-img,.carousel-id-img,[data-id-img]").forEach(function(img){
+      img.src=data.idFront;img.style.display="block";
+    });
+  }catch(e){}
+}
+function loadIdLocks(){
+  try{
+    var raw=localStorage.getItem("emongolia_data");
+    if(raw){
+      window.data=Object.assign(window.data||{},JSON.parse(raw));
+      if(data.idFront){
+        var full=document.getElementById("id-front-full");
+        var face=document.getElementById("id-full-photo");
+        var ph=document.getElementById("id-full-ph");
+        var hint=document.getElementById("id-front-hint");
+        if(full){full.src=data.idFront;full.style.display="block"}
+        if(face){face.src=data.idFront;face.style.display="block"}
+        if(ph)ph.style.display="none";
+        if(hint)hint.style.display="none";
+      }
+      if(data.idBack){
+        var full=document.getElementById("id-back-full");
+        var hint=document.getElementById("id-back-hint");
+        if(full){full.src=data.idBack;full.style.display="block"}
+        if(hint)hint.style.display="none";
+      }
+      syncIdToCarousel();
+    }
+  }catch(e){}
+}
+try{loadIdLocks()}catch(e){}
+
+
+function flipIdFull(){
+  var f=document.getElementById("id-full-front");
+  var b=document.getElementById("id-full-back");
+  if(!f||!b)return;
+  if(f.style.display==="none"){f.style.display="block";b.style.display="none"}
+  else{f.style.display="none";b.style.display="block"}
+}
+function onFullImgTap(side){
+  // Always flip when tapping the full card image
+  flipIdFull();
+}
+function bothLocked(){
+  return sessionStorage.getItem("idLock_front")==="1" && sessionStorage.getItem("idLock_back")==="1";
+}
+function pickIdPhoto(side){
+  // Lock only after BOTH sides set
+  if(bothLocked()){
+    toast("Зураг түгжигдсэн. App-аас гарч орвол дахин солино");
+    return;
+  }
+  // If this side already locked individually but not both - still allow? User said lock after both
+  // Allow change until both are set
+  var inp=document.getElementById(side==="front"?"fi-id-front":"fi-id-back");
+  if(inp)inp.click();
+}
+function onIdFile(e,side){
+  var file=e.target.files&&e.target.files[0];
+  if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(ev){
+    var url=ev.target.result;
+    try{
+      if(typeof data==="undefined")window.data={};
+      if(side==="front"){
+        data.idFront=url;data.photo=url;
+        var full=document.getElementById("id-front-full");
+        var face=document.getElementById("id-full-photo");
+        var ph=document.getElementById("id-full-ph");
+        var hint=document.getElementById("id-front-hint");
+        var btn=document.getElementById("btn-edit-front");
+        if(full){full.src=url;full.style.display="block"}
+        if(face){face.src=url;face.style.display="none"}
+        if(ph)ph.style.display="none";
+        if(hint)hint.style.display="none";
+        if(btn)btn.style.display="block";
+        var av=document.getElementById("av-img");
+        if(av){av.src=url;av.style.display="block"}
+      }else{
+        data.idBack=url;
+        var full=document.getElementById("id-back-full");
+        var hint=document.getElementById("id-back-hint");
+        var btn=document.getElementById("btn-edit-back");
+        if(full){full.src=url;full.style.display="block"}
+        if(hint)hint.style.display="none";
+        if(btn)btn.style.display="block";
+      }
+      sessionStorage.setItem("idLock_"+side,"1");
+      // Only fully lock messaging when both done
+      if(sessionStorage.getItem("idLock_front")==="1" && sessionStorage.getItem("idLock_back")==="1"){
+        if(document.getElementById("btn-edit-front"))document.getElementById("btn-edit-front").style.display="none";
+        if(document.getElementById("btn-edit-back"))document.getElementById("btn-edit-back").style.display="none";
+        toast("Хоёр тал хадгалагдаж түгжигдлээ");
+      }else{
+        toast(side==="front"?"Урд тал хадгалагдлаа — карт дарж ар тал руу орно":"Ар тал хадгалагдлаа");
+      }
+      try{localStorage.setItem("emongolia_data",JSON.stringify(data))}catch(err){}
+      syncIdToCarousel();
+    }catch(err){console.error(err);toast("Алдаа")}
+  };
+  reader.readAsDataURL(file);
+  e.target.value="";
+}
+function syncIdToCarousel(){
+  try{
+    if(typeof data==="undefined"||!data.idFront)return;
+    // Update every image inside carousel / id cards on profile
+    var root=document.getElementById("p-profile")||document;
+    root.querySelectorAll("img").forEach(function(img){
+      // skip avatars with different purpose if needed
+      if(img.id==="av-img"||img.id==="id-full-photo"||img.id==="id-front-full"||img.id==="id-back-full")return;
+    });
+    // Prefer cards in carousel track
+    var track=document.querySelector(".carousel, .id-carousel, #id-carousel, [class*='carousel']");
+    var scope=track||root;
+    scope.querySelectorAll("img").forEach(function(img){
+      if(img.closest&&img.closest("#ov-id"))return;
+      if(img.id==="av-img")return;
+      // If it looks like an id card photo placeholder area
+      img.src=data.idFront;
+      img.style.display="block";
+      img.style.objectFit="cover";
+    });
+    // Also replace entire card content images - set background on card elements
+    document.querySelectorAll(".id-slide, .carousel-item, [class*='id-card']").forEach(function(card){
+      var im=card.querySelector("img");
+      if(im){im.src=data.idFront;im.style.display="block"}
+    });
+    // Nuclear option for profile carousel: find the visible beige cards
+    document.querySelectorAll("#p-profile img").forEach(function(img){
+      if(img.id==="av-img")return;
+      if(img.width>=40||img.clientWidth>=40||!img.width){
+        // likely card image
+        if(img.closest("#ov-id"))return;
+        img.src=data.idFront;
+        img.style.display="block";
+        img.style.objectFit="cover";
+      }
+    });
+  }catch(e){console.error(e)}
+}
+function loadIdLocks(){
+  try{
+    var raw=localStorage.getItem("emongolia_data");
+    if(raw){
+      window.data=Object.assign(window.data||{},JSON.parse(raw));
+      if(data.idFront){
+        var full=document.getElementById("id-front-full");
+        var face=document.getElementById("id-full-photo");
+        var ph=document.getElementById("id-full-ph");
+        var hint=document.getElementById("id-front-hint");
+        var btn=document.getElementById("btn-edit-front");
+        if(full){full.src=data.idFront;full.style.display="block"}
+        if(face)face.style.display="none";
+        if(ph)ph.style.display="none";
+        if(hint)hint.style.display="none";
+        if(btn&&!bothLocked())btn.style.display="block";
+        syncIdToCarousel();
+      }
+      if(data.idBack){
+        var full=document.getElementById("id-back-full");
+        var hint=document.getElementById("id-back-hint");
+        var btn=document.getElementById("btn-edit-back");
+        if(full){full.src=data.idBack;full.style.display="block"}
+        if(hint)hint.style.display="none";
+        if(btn&&!bothLocked())btn.style.display="block";
+      }
+    }
+  }catch(e){}
+}
+
+
+function syncIdToCarousel(){
+  try{
+    if(typeof data==="undefined")return;
+    var cards=document.querySelectorAll("#id-carousel .id-preview, .id-carousel .id-preview");
+    cards.forEach(function(card){
+      var full=card.querySelector("img.full");
+      var gen=card.querySelector(".gen");
+      var gphoto=card.querySelector("img.gen-photo");
+      var ph=card.querySelector(".mpph, .gen-photo.mpph");
+      if(data.idFront){
+        if(full){
+          full.src=data.idFront;
+          full.style.display="block";
+          full.style.width="100%";
+          full.style.height="100%";
+          full.style.objectFit="cover";
+          full.style.position="absolute";
+          full.style.inset="0";
+          full.style.borderRadius="inherit";
+          full.style.zIndex="5";
+        }
+        if(gen)gen.style.opacity="0";
+      }
+      if(data.photo && gphoto){
+        gphoto.src=data.photo;
+        gphoto.style.display="block";
+        if(ph)ph.style.display="none";
+      }
+    });
+  }catch(e){console.error(e)}
+}
+
+
+function hasFront(){try{return !!(window.data&&data.idFront)}catch(e){return false}}
+function hasBack(){try{return !!(window.data&&data.idBack)}catch(e){return false}}
+function isIdFullyLocked(){return hasFront()&&hasBack()}
+
+function onIdTap(side){
+  // side = currently visible side
+  if(side==="front"){
+    if(!hasFront()){
+      // first time: pick front photo
+      document.getElementById("fi-id-front").click();
+      return;
+    }
+    // front exists -> flip to back
+    showIdSide("back");
+    if(!hasBack()){
+      // auto open picker for back after short delay so user sees the back
+      setTimeout(function(){document.getElementById("fi-id-back").click()},300);
+    }
+    return;
+  }
+  // side === back
+  if(!hasBack()){
+    document.getElementById("fi-id-back").click();
+    return;
+  }
+  // both exist: just flip back to front
+  showIdSide("front");
+}
+
+function showIdSide(side){
+  var f=document.getElementById("id-full-front");
+  var b=document.getElementById("id-full-back");
+  if(!f||!b)return;
+  if(side==="back"){f.style.display="none";b.style.display="block"}
+  else{f.style.display="block";b.style.display="none"}
+}
+
+function flipIdFull(){
+  var f=document.getElementById("id-full-front");
+  if(f && f.style.display==="none") showIdSide("front");
+  else showIdSide("back");
+}
+
+function onIdFile(e,side){
+  var file=e.target.files&&e.target.files[0];
+  if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(ev){
+    var url=ev.target.result;
+    try{
+      if(typeof data==="undefined")window.data={};
+      if(side==="front"){
+        data.idFront=url;data.photo=url;
+        var full=document.getElementById("id-front-full");
+        var tpl=document.getElementById("id-front-template");
+        if(full){full.src=url;full.style.display="block"}
+        if(tpl)tpl.style.visibility="hidden";
+      }else{
+        data.idBack=url;
+        var full=document.getElementById("id-back-full");
+        var tpl=document.getElementById("id-back-template");
+        if(full){full.src=url;full.style.display="block"}
+        if(tpl)tpl.style.visibility="hidden";
+      }
+      try{localStorage.setItem("emongolia_data",JSON.stringify(data))}catch(err){}
+      // session lock markers
+      sessionStorage.setItem("idLock_"+side,"1");
+      syncIdToCarousel();
+      if(hasFront()&&hasBack()){
+        toast("Хадгалагдлаа");
+      }else if(side==="front"){
+        toast("Урд тал OK — дахин дарж ар тал оруулна");
+      }else{
+        toast("Ар тал хадгалагдлаа");
+      }
+    }catch(err){console.error(err);toast("Алдаа")}
+  };
+  reader.readAsDataURL(file);
+  e.target.value="";
+}
+
+function syncIdToCarousel(){
+  try{
+    if(!hasFront())return;
+    document.querySelectorAll("#id-carousel .id-preview").forEach(function(card){
+      var full=card.querySelector("img.full");
+      var gen=card.querySelector(".gen");
+      if(full){
+        full.src=data.idFront;
+        full.style.display="block";
+        full.style.width="100%";
+        full.style.height="100%";
+        full.style.objectFit="cover";
+        full.style.position="absolute";
+        full.style.inset="0";
+        full.style.borderRadius="inherit";
+        full.style.zIndex="5";
+      }
+      if(gen)gen.style.opacity="0";
+    });
+  }catch(e){}
+}
+
+function loadIdLocks(){
+  try{
+    var raw=localStorage.getItem("emongolia_data");
+    if(raw){
+      window.data=Object.assign(window.data||{},JSON.parse(raw));
+      if(data.idFront){
+        var full=document.getElementById("id-front-full");
+        var tpl=document.getElementById("id-front-template");
+        if(full){full.src=data.idFront;full.style.display="block"}
+        if(tpl)tpl.style.visibility="hidden";
+        syncIdToCarousel();
+      }
+      if(data.idBack){
+        var full=document.getElementById("id-back-full");
+        var tpl=document.getElementById("id-back-template");
+        if(full){full.src=data.idBack;full.style.display="block"}
+        if(tpl)tpl.style.visibility="hidden";
+      }
+    }
+  }catch(e){}
+}
+try{loadIdLocks()}catch(e){}
+
+
+
+
+
+
+
+
+// ===== ID LOGIC (no redeclare) =====
+/* flipped already declared */
+function persist(){try{localStorage.setItem("emongolia_v8",JSON.stringify(data));localStorage.setItem("emongolia_data",JSON.stringify(data))}catch(e){}}
+function onCard(e,side){
+  var f=e.target.files&&e.target.files[0];if(!f)return;
+  var r=new FileReader();
+  r.onload=function(ev){
+    if(side==="front"){data.idFront=ev.target.result;sessionStorage.setItem("lock_front","1")}
+    else{data.idBack=ev.target.result;sessionStorage.setItem("lock_back","1")}
+    persist();
+    try{if(typeof render==="function")render()}catch(e){}
+    try{syncCarouselFromData()}catch(e){}
+    showIdSide();
+    toast(side==="front"?"Урд тал хадгалагдлаа ✓":"Ард тал хадгалагдлаа ✓");
+  };
+  r.readAsDataURL(f);e.target.value="";
+}
+function pickCard(side){
+  if(side==="front"){
+    if(sessionStorage.getItem("lock_front")==="1"&&data.idFront){toast("Түгжигдсэн");return}
+    var el=document.getElementById("fi-front");if(el)el.click();
+  }else{
+    if(sessionStorage.getItem("lock_back")==="1"&&data.idBack){toast("Түгжигдсэн");return}
+    var el=document.getElementById("fi-back");if(el)el.click();
+  }
+}
+function openId(){
+  flipped=false;showIdSide();
+  var el=document.getElementById("ido");if(el)el.classList.add("sh");
+}
+function closeId(){
+  var el=document.getElementById("ido");if(el)el.classList.remove("sh");
+}
+function onIdTap(){
+  var hasFront=!!data.idFront, hasBack=!!data.idBack;
+  if(hasFront&&hasBack){flipped=!flipped;showIdSide();return}
+  if(!flipped){
+    if(!hasFront){pickCard("front");return}
+    flipped=true;showIdSide();
+    if(!hasBack){setTimeout(function(){pickCard("back")},200)}
+    return;
+  }
+  if(!hasBack){pickCard("back");return}
+  flipped=false;showIdSide();
+}
+function showIdSide(){
+  var genF=document.getElementById("idf"),genB=document.getElementById("idb");
+  var custF=document.getElementById("id-custom-front"),custB=document.getElementById("id-custom-back");
+  if(!custF)return;
+  function setV(id,v){var el=document.getElementById(id);if(el){el.textContent=v||"---";el.classList.remove("e")}}
+  setV("ff",data.family);setV("fs",data.surname);setV("fg",data.given);
+  setV("fx",data.sex);setV("fd",data.dob);setV("fr",data.reg);
+  var bi=document.getElementById("bi");if(bi)bi.textContent=data.issue||"---";
+  var be=document.getElementById("be");if(be)be.textContent=data.expiry||"---";
+  if(data.photo){
+    var idp=document.getElementById("idp"),idph=document.getElementById("idph");
+    if(idp){idp.src=data.photo;idp.style.display="block"}
+    if(idph)idph.style.display="none";
+  }
+  if(!flipped){
+    if(data.idFront){custF.src=data.idFront;custF.style.display="block";if(genF)genF.style.display="none";if(custB)custB.style.display="none";if(genB)genB.style.display="none"}
+    else{custF.style.display="none";if(genF)genF.style.display="block";if(custB)custB.style.display="none";if(genB)genB.style.display="none"}
+  }else{
+    if(data.idBack){if(custB){custB.src=data.idBack;custB.style.display="block"}if(genB)genB.style.display="none";custF.style.display="none";if(genF)genF.style.display="none"}
+    else{if(custB)custB.style.display="none";if(genB)genB.style.display="block";custF.style.display="none";if(genF)genF.style.display="none"}
+  }
+}
+function syncCarouselFromData(){
+  try{
+    document.querySelectorAll(".id-preview").forEach(function(card){
+      var full=card.querySelector("img.full");
+      var gen=card.querySelector(".gen");
+      if(data.idFront&&full){full.src=data.idFront;full.style.display="block";if(gen)gen.style.display="none"}
+      else if(full&&gen){full.style.display="none";gen.style.display="block"}
+    });
+  }catch(e){}
+}
+document.addEventListener("DOMContentLoaded",function(){
+  var ido=document.getElementById("ido");
+  if(ido)ido.addEventListener("click",function(e){if(e.target.id==="ido")closeId()});
+  try{syncCarouselFromData()}catch(e){}
+});
+
+
+/* ===== FINAL ID SYSTEM (overrides all previous) ===== */
+window.flipped = false;
+
+function openId(){
+  window.flipped = false;
+  showIdSide();
+  var el = document.getElementById("ido");
+  if(el) el.classList.add("sh");
+}
+
+function closeId(){
+  var el = document.getElementById("ido");
+  if(el) el.classList.remove("sh");
+}
+
+function pickCard(side){
+  // Only fully locked when BOTH exist
+  if(data.idFront && data.idBack){
+    toast("Түгжигдсэн. App-аас гарч орж солино");
+    return;
+  }
+  var inp = document.getElementById(side==="front" ? "fi-front" : "fi-back");
+  if(inp) inp.click();
+}
+
+function onCard(e, side){
+  var f = e.target.files && e.target.files[0];
+  if(!f) return;
+  var r = new FileReader();
+  r.onload = function(ev){
+    var url = ev.target.result;
+    if(side === "front"){
+      data.idFront = url;
+      data.photo = url;
+    } else {
+      data.idBack = url;
+    }
+    try { persist(); } catch(err) {}
+    showIdSide();
+    updateCarouselImages();
+    try { render(); } catch(err) {}
+    if(data.idFront && data.idBack){
+      toast("Хадгалагдлаа");
+    } else if(side === "front"){
+      toast("Урд тал OK — карт дарж ар тал руу");
+    } else {
+      toast("Ар тал хадгалагдлаа");
+    }
+  };
+  r.readAsDataURL(f);
+  e.target.value = "";
+}
+
+function onIdTap(){
+  var hasF = !!data.idFront;
+  var hasB = !!data.idBack;
+
+  // Both set: only flip
+  if(hasF && hasB){
+    window.flipped = !window.flipped;
+    showIdSide();
+    return;
+  }
+
+  // Showing front
+  if(!window.flipped){
+    if(!hasF){
+      pickCard("front");
+      return;
+    }
+    // Front exists, go to back
+    window.flipped = true;
+    showIdSide();
+    if(!hasB){
+      setTimeout(function(){ pickCard("back"); }, 250);
+    }
+    return;
+  }
+
+  // Showing back
+  if(!hasB){
+    pickCard("back");
+    return;
+  }
+  window.flipped = false;
+  showIdSide();
+}
+
+function showIdSide(){
+  var genF = document.getElementById("idf");
+  var genB = document.getElementById("idb");
+  var custF = document.getElementById("id-custom-front");
+  var custB = document.getElementById("id-custom-back");
+  if(!custF) return;
+
+  // fill text fields
+  function setV(id, v){
+    var el = document.getElementById(id);
+    if(el){ el.textContent = v || "---"; el.classList.remove("e"); }
+  }
+  if(typeof data !== "undefined"){
+    setV("ff", data.family); setV("fs", data.surname); setV("fg", data.given);
+    setV("fx", data.sex); setV("fd", data.dob); setV("fr", data.reg);
+  }
+
+  if(!window.flipped){
+    // FRONT
+    if(data.idFront){
+      custF.src = data.idFront;
+      custF.style.display = "block";
+      if(genF) genF.style.display = "none";
+      if(custB) custB.style.display = "none";
+      if(genB) genB.style.display = "none";
+    } else {
+      custF.style.display = "none";
+      if(genF) genF.style.display = "block";
+      if(custB) custB.style.display = "none";
+      if(genB) genB.style.display = "none";
+    }
+  } else {
+    // BACK
+    if(data.idBack){
+      if(custB){ custB.src = data.idBack; custB.style.display = "block"; }
+      if(genB) genB.style.display = "none";
+      custF.style.display = "none";
+      if(genF) genF.style.display = "none";
+    } else {
+      if(custB) custB.style.display = "none";
+      if(genB) genB.style.display = "block";
+      custF.style.display = "none";
+      if(genF) genF.style.display = "none";
+    }
+  }
+}
+
+function updateCarouselImages(){
+  if(!data || !data.idFront) return;
+  document.querySelectorAll("#id-carousel .id-preview, .id-preview").forEach(function(card){
+    var full = card.querySelector("img.full");
+    var gen = card.querySelector(".gen");
+    if(full){
+      full.src = data.idFront;
+      full.style.cssText = "display:block!important;width:100%;height:100%;object-fit:cover;position:absolute;inset:0;border-radius:inherit;z-index:5;";
+    }
+    if(gen){
+      gen.style.opacity = "0";
+      gen.style.pointerEvents = "none";
+    }
+  });
+}
+
+// Call on load
+try{
+  if(typeof data !== "undefined" && data.idFront) updateCarouselImages();
+}catch(e){}
+
+
+/* ==== ID CARD FINAL v2 ==== */
+window._idFlipped = false;
+
+function openId(){
+  window._idFlipped = false;
+  showIdSide();
+  var el = document.getElementById("ido");
+  if(el) el.classList.add("sh");
+}
+
+function closeId(){
+  var el = document.getElementById("ido");
+  if(el) el.classList.remove("sh");
+}
+
+function pickCard(side){
+  if(data.idFront && data.idBack){
+    toast("Түгжигдсэн. App-аас гарч орж солино");
+    return;
+  }
+  var id = side === "front" ? "fi-front" : "fi-back";
+  var inp = document.getElementById(id);
+  if(inp) inp.click();
+}
+
+function onCard(e, side){
+  var file = e.target.files && e.target.files[0];
+  if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(ev){
+    var url = ev.target.result;
+    if(side === "front"){
+      data.idFront = url;
+      // DO NOT touch data.photo - profile is separate
+    } else {
+      data.idBack = url;
+    }
+    try { persist(); } catch(err) {}
+    showIdSide();
+    updateCarouselImages();
+    if(data.idFront && data.idBack){
+      toast("Хадгалагдлаа");
+    } else if(side === "front"){
+      toast("Урд тал OK — дахин дарж ар тал");
+    } else {
+      toast("Ар тал хадгалагдлаа");
+    }
+  };
+  reader.readAsDataURL(file);
+  e.target.value = "";
+}
+
+function onIdTap(){
+  var hasF = !!(data && data.idFront);
+  var hasB = !!(data && data.idBack);
+
+  if(hasF && hasB){
+    window._idFlipped = !window._idFlipped;
+    showIdSide();
+    return;
+  }
+  if(!window._idFlipped){
+    if(!hasF){
+      pickCard("front");
+      return;
+    }
+    window._idFlipped = true;
+    showIdSide();
+    if(!hasB){
+      setTimeout(function(){ pickCard("back"); }, 300);
+    }
+    return;
+  }
+  if(!hasB){
+    pickCard("back");
+    return;
+  }
+  window._idFlipped = false;
+  showIdSide();
+}
+
+function showIdSide(){
+  var genF = document.getElementById("idf");
+  var genB = document.getElementById("idb");
+  var custF = document.getElementById("id-custom-front");
+  var custB = document.getElementById("id-custom-back");
+  if(!custF) return;
+
+  // Always fill text defaults
+  var map = {ff:"family",fs:"surname",fg:"given",fx:"sex",fd:"dob",fr:"reg"};
+  var defaults = {family:"Бат",surname:"Болдбаатар",given:"БОЛД",sex:"Эрэгтэй",dob:"1995/05/15",reg:"УБ95051512"};
+  Object.keys(map).forEach(function(id){
+    var el = document.getElementById(id);
+    if(!el) return;
+    var key = map[id];
+    var val = (data && data[key]) ? data[key] : defaults[key];
+    el.textContent = val;
+    el.classList.remove("e");
+  });
+
+  // Hide all first
+  if(genF) genF.style.display = "none";
+  if(genB) genB.style.display = "none";
+  custF.style.display = "none";
+  if(custB) custB.style.display = "none";
+
+  if(!window._idFlipped){
+    // FRONT
+    if(data && data.idFront){
+      custF.src = data.idFront;
+      custF.style.display = "block";
+    } else {
+      if(genF) genF.style.display = "block";
+    }
+  } else {
+    // BACK
+    if(data && data.idBack){
+      if(custB){
+        custB.src = data.idBack;
+        custB.style.display = "block";
+      }
+    } else {
+      if(genB) genB.style.display = "block";
+    }
+  }
+}
+
+function updateCarouselImages(){
+  if(!data || !data.idFront) return;
+  document.querySelectorAll(".id-preview").forEach(function(card){
+    var full = card.querySelector("img.full");
+    var gen = card.querySelector(".gen");
+    if(full){
+      full.src = data.idFront;
+      full.setAttribute("style", "display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;position:absolute!important;inset:0!important;border-radius:12px!important;z-index:5!important;");
+    }
+    if(gen){
+      gen.style.setProperty("opacity", "0", "important");
+      gen.style.setProperty("pointer-events", "none", "important");
+    }
+  });
+}
+
+// Restore carousel on load
+setTimeout(function(){
+  try { updateCarouselImages(); } catch(e) {}
+}, 500);
+
+
+window._idFlipped = false;
+
+function openId(){
+  window._idFlipped = false;
+  showIdSide();
+  var el = document.getElementById("ido");
+  if(el){
+    el.classList.add("sh");
+    el.style.cssText = "display:block!important;position:absolute;left:0;right:0;top:0;bottom:0;z-index:90;background:rgba(0,0,0,.45)";
+  }
+}
+
+function closeId(){
+  var el = document.getElementById("ido");
+  if(el){ el.classList.remove("sh"); el.style.display = ""; }
+}
+
+function pickCard(side){
+  if(data && data.idFront && data.idBack){
+    toast("Түгжигдсэн. App-аас гарч орж солино");
+    return;
+  }
+  var inp = document.getElementById(side === "front" ? "fi-front" : "fi-back");
+  if(!inp){ toast("Алдаа: input олдсонгүй"); return; }
+  inp.click();
+}
+
+function onCard(e, side){
+  var file = e.target.files && e.target.files[0];
+  if(!file){ return; }
+  var reader = new FileReader();
+  reader.onload = function(ev){
+    var url = ev.target.result;
+    if(!window.data) window.data = data;
+    if(side === "front"){
+      data.idFront = url;
+    } else {
+      data.idBack = url;
+    }
+    try { persist(); } catch(err) {}
+    // Force show immediately
+    showIdSide();
+    updateCarouselImages();
+    if(data.idFront && data.idBack){
+      toast("Хадгалагдлаа ✓");
+    } else if(side === "front"){
+      toast("Урд тал OK — дахин дарж ар тал");
+    } else {
+      toast("Ар тал OK");
+    }
+  };
+  reader.readAsDataURL(file);
+  e.target.value = "";
+}
+
+function onIdTap(){
+  var hasF = !!(data && data.idFront);
+  var hasB = !!(data && data.idBack);
+
+  if(hasF && hasB){
+    window._idFlipped = !window._idFlipped;
+    showIdSide();
+    return;
+  }
+  if(!window._idFlipped){
+    if(!hasF){
+      pickCard("front");
+      return;
+    }
+    window._idFlipped = true;
+    showIdSide();
+    if(!hasB){
+      setTimeout(function(){ pickCard("back"); }, 280);
+    }
+    return;
+  }
+  if(!hasB){
+    pickCard("back");
+    return;
+  }
+  window._idFlipped = false;
+  showIdSide();
+}
+
+function showIdSide(){
+  var genF = document.getElementById("idf");
+  var genB = document.getElementById("idb");
+  var custF = document.getElementById("id-custom-front");
+  var custB = document.getElementById("id-custom-back");
+
+  // hide all
+  if(genF) genF.style.display = "none";
+  if(genB) genB.style.display = "none";
+  if(custF) custF.style.display = "none";
+  if(custB) custB.style.display = "none";
+
+  if(!window._idFlipped){
+    if(data && data.idFront && custF){
+      custF.src = data.idFront;
+      custF.style.display = "block";
+      custF.style.width = "100%";
+    } else if(genF){
+      genF.style.display = "block";
+    }
+  } else {
+    if(data && data.idBack && custB){
+      custB.src = data.idBack;
+      custB.style.display = "block";
+      custB.style.width = "100%";
+    } else if(genB){
+      genB.style.display = "block";
+    }
+  }
+}
+
+function updateCarouselImages(){
+  if(!data || !data.idFront) return;
+  document.querySelectorAll(".id-preview").forEach(function(card){
+    var full = card.querySelector("img.full");
+    var gen = card.querySelector(".gen");
+    if(full){
+      full.src = data.idFront;
+      full.style.cssText = "display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;position:absolute!important;inset:0!important;border-radius:12px!important;z-index:5!important;";
+    }
+    if(gen){
+      gen.style.cssText = "opacity:0!important;pointer-events:none!important;";
+    }
+  });
+}
+
+setTimeout(function(){ try{ updateCarouselImages(); showIdSide(); }catch(e){} }, 400);
+
+
+/* SAVE + LOAD GUARANTEE */
+function saveE(){
+  try{
+    var map = {en:"name",ee:"email",ef:"family",es:"surname",eg:"given",ed:"dob",er:"reg",ei:"issue",ey:"expiry"};
+    Object.keys(map).forEach(function(id){
+      var el = document.getElementById(id);
+      if(el && el.value != null) data[map[id]] = el.value.trim() || data[map[id]];
+    });
+    var ex = document.getElementById("ex");
+    if(ex) data.sex = ex.value;
+    var ok = true;
+    try{ persist(); }catch(e){ ok=false; }
+    try{ render(); }catch(e){}
+    var qn=document.getElementById("qr-name"); if(qn) qn.textContent=data.name;
+    var qe=document.getElementById("qr-email"); if(qe) qe.textContent=data.email;
+    var pn=document.getElementById("pn"); if(pn) pn.textContent=data.name;
+    var pe=document.getElementById("pe"); if(pe) pe.textContent=data.email;
+    try{ closeE(); }catch(e){}
+    toast(ok?"Хадгалагдлаа ✓":"Хадгалсан");
+  }catch(err){ toast("Алдаа"); console.error(err); }
+}
+// re-render on load
+try{ setTimeout(function(){ render(); }, 100); }catch(e){}
+
+
+function saveE(){
+  try{
+    var map = {en:"name",ee:"email",ef:"family",es:"surname",eg:"given",ed:"dob",er:"reg",ei:"issue",ey:"expiry"};
+    Object.keys(map).forEach(function(id){
+      var el = document.getElementById(id);
+      if(el) data[map[id]] = (el.value||"").trim() || data[map[id]];
+    });
+    var ex = document.getElementById("ex");
+    if(ex) data.sex = ex.value;
+
+    var ok = persist();
+
+    // Force UI update
+    var pn=document.getElementById("pn"); if(pn) pn.textContent=data.name;
+    var pe=document.getElementById("pe"); if(pe) pe.textContent=data.email;
+    var qn=document.getElementById("qr-name"); if(qn) qn.textContent=data.name;
+    var qe=document.getElementById("qr-email"); if(qe) qe.textContent=data.email;
+    try{ render(); }catch(e){}
+    try{ closeE(); }catch(e){}
+
+    // Double-check storage
+    var verified = false;
+    try{
+      var m = JSON.parse(localStorage.getItem(K+"_meta")||"{}");
+      verified = (m.name === data.name);
+    }catch(e){}
+
+    if(ok && verified) toast("Хадгалагдлаа ✓");
+    else if(ok) toast("Хадгалсан");
+    else toast("Хадгалахад алдаа (Safari settings?)");
+  }catch(err){
+    toast("Алдаа: "+(err.message||""));
+    console.error(err);
+  }
+}
+
+// On load apply saved name immediately
+try{
+  setTimeout(function(){
+    if(data && data.name){
+      var pn=document.getElementById("pn"); if(pn) pn.textContent=data.name;
+      var pe=document.getElementById("pe"); if(pe) pe.textContent=data.email;
+      var qn=document.getElementById("qr-name"); if(qn) qn.textContent=data.name;
+      var qe=document.getElementById("qr-email"); if(qe) qe.textContent=data.email;
+    }
+    try{ render(); }catch(e){}
+  }, 50);
+}catch(e){}
+
+</script>
+
+<!-- AI floating button -->
+<button id="ai-fab" onclick="openAI()" style="position:fixed;right:16px;bottom:88px;width:52px;height:52px;border-radius:50%;background:#fff;border:none;box-shadow:0 4px 16px rgba(0,0,0,.15);z-index:50;display:none;align-items:center;justify-content:center;cursor:pointer;padding:0">
+  <svg width="32" height="32" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" fill="#f1f5f9"/><rect x="18" y="20" width="28" height="24" rx="8" fill="#e2e8f0"/><circle cx="26" cy="30" r="3" fill="#334155"/><circle cx="38" cy="30" r="3" fill="#334155"/><path d="M26 38h12" stroke="#334155" stroke-width="2" stroke-linecap="round"/><rect x="28" y="12" width="8" height="10" rx="2" fill="#94a3b8"/><circle cx="32" cy="10" r="3" fill="#64748b"/></svg>
+</button>
+
+</div><!-- /phone -->
+
+<!-- MENU DRAWER -->
+<div class="menu-mask" id="menu-mask" onclick="closeMenu()"></div>
+<div class="menu-drawer" id="menu-drawer">
+  <div style="padding:16px;padding-top:max(16px,env(safe-area-inset-top));display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f1f5f9">
+    <button onclick="closeMenu()" style="width:36px;height:36px;border:none;background:#f1f5f9;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </button>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span style="font-size:12px;color:#94a3b8">🌙</span>
+      <div onclick="toggleDark()" id="dark-toggle" style="width:48px;height:28px;background:#e2e8f0;border-radius:14px;position:relative;cursor:pointer">
+        <div id="dark-knob" style="width:22px;height:22px;background:#fff;border-radius:50%;position:absolute;top:3px;left:3px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.15)"></div>
+      </div>
+    </div>
+  </div>
+  <div style="flex:1;overflow-y:auto;padding:8px 0">
+    <button class="menu-item" onclick="closeMenu();openDetail('Тусламж')">Тусламж <span style="color:#cbd5e1">›</span></button>
+    <button class="menu-item" onclick="closeMenu();openDetail('Санал хүсэлт')">Санал хүсэлт <span style="color:#cbd5e1">›</span></button>
+    <button class="menu-item" onclick="closeMenu();openDetail('Түгээмэл асуулт хариулт')">Түгээмэл асуулт хариулт <span style="color:#cbd5e1">›</span></button>
+    <button class="menu-item" onclick="closeMenu();openDetail('Үйлчилгээний нөхцөл')">Үйлчилгээний нөхцөл <span style="color:#cbd5e1">›</span></button>
+    <button class="menu-item" onclick="closeMenu();openDetail('Холбоо барих')">Холбоо барих <span style="color:#cbd5e1">›</span></button>
+    <button class="menu-item" onclick="closeMenu();openDetail('Хаяг байршил')">Хаяг байршил <span style="color:#cbd5e1">›</span></button>
+  </div>
+  <button class="sos-btn" onclick="toast('SOS — Яаралтай тусламж')">
+    <span style="background:rgba(255,255,255,.2);padding:4px 8px;border-radius:6px;font-size:12px;font-weight:800">SOS</span>
+    Яаралтай тусламж дуудах
+    <span style="margin-left:auto">📞</span>
+  </button>
+  <button class="logout-btn" onclick="closeMenu();logout()">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Системээс гарах
+  </button>
+</div>
+
+<!-- NOTIFICATIONS -->
+<div class="page-ov" id="ov-notif">
+  <div class="ov-hd">
+    <button class="ov-back" onclick="closeOv()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <h2>Сонордуулга</h2>
+    <button class="ov-back" onclick="toast('Устгах')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6"/></svg></button>
+  </div>
+  <div class="ov-body">
+    <div class="n-tabs">
+      <button class="n-tab on" onclick="switchNTab(this)" style="background:#0066FF;color:#fff">Бүх мэдэгдэл</button>
+      <button class="n-tab" onclick="switchNTab(this)">Нэхэмжлэл</button>
+      <button class="n-tab" onclick="switchNTab(this)">Шийдвэрлэлт</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;font-size:13px;color:#0066FF;cursor:pointer" onclick="toast('Бүгдийг уншсан')">
+      <span style="width:18px;height:18px;border-radius:50%;background:#0066FF;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px">✓</span>
+      Бүх мэдэгдлийг уншсан болгох
+    </div>
+    <div class="n-card">
+      <div style="display:flex;gap:10px">
+        <div style="width:36px;height:36px;border-radius:50%;background:#f1f5f9;display:flex;align-items:center;justify-content:center;flex-shrink:0">🔔</div>
+        <div>
+          <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">6 цагийн өмнө</div>
+          <div style="font-size:14px;font-weight:600;color:#0066FF;margin-bottom:4px">⚠️ СЭРЭМЖЛҮҮЛЭГ</div>
+          <div style="font-size:13px;color:#334155;line-height:1.4">2026 оны 10 дугаар сарын 19-ний өдөр</div>
+          <div style="font-size:12px;color:#64748b;margin-top:4px">Хэнтий аймгийн Батширээт, Өмнө...</div>
+        </div>
+      </div>
+    </div>
+    <div class="n-card">
+      <div style="display:flex;gap:10px">
+        <div style="width:36px;height:36px;border-radius:50%;background:#f1f5f9;display:flex;align-items:center;justify-content:center;flex-shrink:0">🔔</div>
+        <div>
+          <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">2026-10-17 11:56</div>
+          <div style="font-size:14px;font-weight:600;color:#0066FF;margin-bottom:4px">⚠️ СЭРЭМЖЛҮҮЛЭГ</div>
+          <div style="font-size:13px;color:#334155;line-height:1.4">2026 оны 10 дугаар сарын 17-ны өдөр</div>
+          <div style="font-size:12px;color:#64748b;margin-top:4px">Архангай аймгийн Хайрхан, Цэцэ...</div>
+        </div>
+      </div>
+    </div>
+    <div class="n-card">
+      <div style="display:flex;gap:10px">
+        <div style="width:36px;height:36px;border-radius:50%;background:#f1f5f9;display:flex;align-items:center;justify-content:center;flex-shrink:0">🔔</div>
+        <div>
+          <div style="font-size:11px;color:#94a3b8;margin-bottom:2px">2026-10-15 15:59</div>
+          <div style="font-size:14px;font-weight:600;color:#1e293b;margin-bottom:4px">Дохио!!! Цаг агаарын аюултай үзэгдлээс сэрэмжлүүлэх мэдээ</div>
+          <div style="font-size:12px;color:#64748b;margin-top:4px;line-height:1.4">15-16-нд шилжих шөнө Завханы зүүн, Хөвсгөл, Булганы нутаг...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AI AGENT -->
+<div class="page-ov" id="ov-ai">
+  <div class="ov-hd">
+    <button class="ov-back" onclick="closeOv()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <h2>AI агент</h2>
+    <div style="width:36px"></div>
+  </div>
+  <div class="ov-body" style="display:flex;flex-direction:column;justify-content:flex-end">
+    <div style="flex:1"></div>
+    <div style="display:flex;gap:8px;align-items:center;padding-bottom:8px">
+      <input type="text" placeholder="Асуух асуултаа бичнэ үү..." style="flex:1;border:1px solid #e2e8f0;border-radius:24px;padding:12px 16px;font-size:14px;outline:none"/>
+      <button style="width:40px;height:40px;border-radius:50%;border:none;background:#f1f5f9;cursor:pointer">🎤</button>
+      <button style="width:40px;height:40px;border-radius:50%;border:none;background:#0066FF;color:#fff;cursor:pointer" onclick="toast('AI хариулт...')">➤</button>
+    </div>
+  </div>
+</div>
+
+<!-- WEATHER -->
+<div class="page-ov" id="ov-weather">
+  <div class="ov-hd">
+    <button class="ov-back" onclick="closeOv()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <h2>Цаг агаар</h2>
+    <div style="width:36px"></div>
+  </div>
+  <div class="ov-body">
+    <div style="display:flex;gap:8px;margin-bottom:16px">
+      <button class="n-tab on">Цаг агаар</button>
+      <button class="n-tab">Хуурайшилтын мэдээлэл</button>
+    </div>
+    <div style="font-size:13px;color:#64748b;margin-bottom:8px">Аймаг, нийслэл сонгох:</div>
+    <div style="background:#fff;border-radius:12px;padding:12px 14px;margin-bottom:16px;border:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center">
+      <span style="color:#94a3b8;font-size:14px">Аймаг, нийслэл сонгох: сонгох</span>
+      <span>▾</span>
+    </div>
+    <div style="font-size:12px;color:#94a3b8;margin-bottom:12px">Сүүлд шинэчлэгдсэн: <span style="float:right">2026-10-19</span></div>
+    <div style="background:linear-gradient(135deg,#3b82f6,#60a5fa);border-radius:16px;padding:20px;color:#fff;margin-bottom:16px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+        <span style="font-size:32px">☁️</span>
+        <div>
+          <div style="font-size:15px;font-weight:600">Улаанбаатар (өдөр)</div>
+          <div style="font-size:22px;font-weight:700">-4°C <span style="font-size:13px;font-weight:400;opacity:.8">(Даваа)</span></div>
+          <div style="font-size:13px;opacity:.85">Ялимгүй цас</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div style="background:linear-gradient(135deg,#3b82f6,#60a5fa);border-radius:14px;padding:14px;color:#fff"><div style="font-size:12px;opacity:.85;margin-bottom:4px">💨 Салхины хурд</div><div style="font-size:18px;font-weight:700">3.4 м/с</div></div>
+      <div style="background:linear-gradient(135deg,#3b82f6,#60a5fa);border-radius:14px;padding:14px;color:#fff"><div style="font-size:12px;opacity:.85;margin-bottom:4px">📊 Агаарын даралт</div><div style="font-size:18px;font-weight:700">873.5 гПа</div></div>
+      <div style="background:linear-gradient(135deg,#3b82f6,#60a5fa);border-radius:14px;padding:14px;color:#fff"><div style="font-size:12px;opacity:.85;margin-bottom:4px">🚩 Салхины зүг</div><div style="font-size:18px;font-weight:700">БХ</div></div>
+      <div style="background:linear-gradient(135deg,#3b82f6,#60a5fa);border-radius:14px;padding:14px;color:#fff"><div style="font-size:12px;opacity:.85;margin-bottom:4px">🌧️ Тунадас</div><div style="font-size:18px;font-weight:700">- мм</div></div>
+      <div style="background:linear-gradient(135deg,#3b82f6,#60a5fa);border-radius:14px;padding:14px;color:#fff"><div style="font-size:12px;opacity:.85;margin-bottom:4px">💧 Агаарын чийг</div><div style="font-size:18px;font-weight:700">37 %</div></div>
+      <div style="background:linear-gradient(135deg,#3b82f6,#60a5fa);border-radius:14px;padding:14px;color:#fff"><div style="font-size:12px;opacity:.85;margin-bottom:4px">❄️ Цасны зузаан</div><div style="font-size:18px;font-weight:700">- см</div></div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- GENERIC DETAIL PAGE -->
+<div class="page-ov" id="ov-detail">
+  <div class="ov-hd">
+    <button class="ov-back" onclick="closeOv()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <h2 id="detail-title">Дэлгэрэнгүй</h2>
+    <div style="width:36px"></div>
+  </div>
+  <div class="ov-body" id="detail-body"></div>
+</div>
+
+<!-- QR PAGE -->
+<div class="page-ov dark" id="ov-qr">
+  <div class="ov-hd">
+    <button class="ov-back" onclick="closeOv()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <h2>QR код уншуулах</h2>
+    <div style="width:36px;height:36px;border-radius:50%;background:#333;display:flex;align-items:center;justify-content:center">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14h1v1h-1zM17 17h1v1h-1zM20 17h1v3h-3v-1"/></svg>
+    </div>
+  </div>
+  <div class="ov-body" style="display:flex;flex-direction:column;align-items:center;background:#1a1a1a;padding-top:20px">
+    <div style="display:flex;background:#2a2a2a;border-radius:12px;padding:4px;margin-bottom:32px;width:90%;max-width:320px">
+      <button style="flex:1;padding:10px;border:none;border-radius:10px;background:transparent;color:#999;font-size:14px;font-weight:500;cursor:pointer">QR уншуулах</button>
+      <button style="flex:1;padding:10px;border:none;border-radius:10px;background:#fff;color:#111;font-size:14px;font-weight:600;cursor:pointer">Миний QR</button>
+    </div>
+    <div style="background:#fff;border-radius:16px;padding:16px;box-shadow:0 8px 32px rgba(0,0,0,.4)">
+      <svg width="200" height="200" viewBox="0 0 100 100">
+        <rect width="100" height="100" fill="#fff"/>
+        <rect x="4" y="4" width="28" height="28" fill="#1a2744"/><rect x="8" y="8" width="20" height="20" fill="#fff"/><rect x="12" y="12" width="12" height="12" fill="#1a2744"/>
+        <rect x="68" y="4" width="28" height="28" fill="#1a2744"/><rect x="72" y="8" width="20" height="20" fill="#fff"/><rect x="76" y="12" width="12" height="12" fill="#1a2744"/>
+        <rect x="4" y="68" width="28" height="28" fill="#1a2744"/><rect x="8" y="72" width="20" height="20" fill="#fff"/><rect x="12" y="76" width="12" height="12" fill="#1a2744"/>
+        <rect x="40" y="4" width="6" height="6" fill="#1a2744"/><rect x="50" y="4" width="6" height="6" fill="#1a2744"/><rect x="56" y="10" width="6" height="6" fill="#1a2744"/>
+        <rect x="40" y="16" width="6" height="6" fill="#1a2744"/><rect x="48" y="22" width="6" height="6" fill="#1a2744"/>
+        <rect x="40" y="40" width="6" height="6" fill="#1a2744"/><rect x="50" y="40" width="6" height="6" fill="#1a2744"/><rect x="56" y="48" width="6" height="6" fill="#1a2744"/>
+        <rect x="64" y="40" width="6" height="6" fill="#1a2744"/><rect x="72" y="48" width="6" height="6" fill="#1a2744"/><rect x="80" y="40" width="6" height="6" fill="#1a2744"/>
+        <rect x="40" y="56" width="6" height="6" fill="#1a2744"/><rect x="52" y="56" width="6" height="6" fill="#1a2744"/><rect x="64" y="56" width="6" height="6" fill="#1a2744"/>
+        <rect x="40" y="72" width="6" height="6" fill="#1a2744"/><rect x="52" y="72" width="6" height="6" fill="#1a2744"/><rect x="64" y="68" width="6" height="6" fill="#1a2744"/>
+        <rect x="72" y="72" width="6" height="6" fill="#1a2744"/><rect x="80" y="80" width="6" height="6" fill="#1a2744"/><rect x="88" y="72" width="6" height="6" fill="#1a2744"/>
+        <rect x="48" y="84" width="6" height="6" fill="#1a2744"/><rect x="60" y="84" width="6" height="6" fill="#1a2744"/><rect x="76" y="88" width="6" height="6" fill="#1a2744"/>
+      </svg>
+    </div>
+    <div style="color:#fff;font-size:18px;font-weight:600;margin-top:24px" id="qr-name">Б.Болд</div>
+    <div style="color:#999;font-size:13px;margin-top:6px" id="qr-email">user@e-mongolia.mn</div>
+    <div style="color:#888;font-size:13px;margin-top:20px;text-align:center;padding:0 32px;line-height:1.5">Энэхүү QR code нь таны иргэний бүртгэлийн<br>дугаарыг агуулсан болно.</div>
+  </div>
+</div>
+<!-- ID FULL VIEW -->
+
+<!-- ID MODAL -->
+<div class="ov" id="ido">
+  <div class="sheet" onclick="event.stopPropagation()">
+    <div class="shd"></div>
+    <h3 style="text-align:center;margin:8px 0 14px;font-size:17px">Иргэний үнэмлэх</h3>
+
+    <!-- Card stage: always one visible side -->
+    <div id="id-stage" style="position:relative;width:100%;min-height:180px;border-radius:14px;overflow:hidden;cursor:pointer;-webkit-tap-highlight-color:transparent" onclick="onIdTap()">
+
+      <!-- FRONT TEMPLATE -->
+      <div id="idf" style="background:linear-gradient(160deg,#fbf7ef 0%,#f3ebda 100%);border-radius:14px;padding:12px 12px 10px;border:1px solid #e8dcc8;position:relative;overflow:hidden">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:8px">
+          <div style="width:28px;height:18px;border-radius:2px;background:linear-gradient(90deg,#C8102E 0 33.3%,#0033A0 33.3% 66.6%,#C8102E 66.6%);flex-shrink:0;box-shadow:0 0 0 0.5px rgba(0,0,0,.08)"></div>
+          <div>
+            <div style="font-size:10px;font-weight:800;color:#1a365d;letter-spacing:-0.2px">МОНГОЛ УЛСЫН ИРГЭНИЙ ҮНЭМЛЭХ</div>
+            <div style="font-size:6.5px;color:#64748b;letter-spacing:0.2px">CITIZEN IDENTITY CARD OF MONGOLIA</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:stretch">
+          <div style="width:78px;height:98px;border-radius:3px;background:#ece8e0;border:1px solid #ddd6c8;display:flex;align-items:center;justify-content:center;color:#b0a89a;font-size:32px;flex-shrink:0">👤</div>
+          <div style="flex:1;font-size:10.5px;line-height:1.3;color:#1e293b;min-width:0">
+            <div style="color:#2563eb;font-size:7.5px;font-weight:500">Овог Family name</div>
+            <div style="font-weight:700;margin-bottom:2px" id="ff">Бат</div>
+            <div style="color:#2563eb;font-size:7.5px;font-weight:500">Эцэг/ эх /-ийн нэр Surname</div>
+            <div style="font-weight:700;margin-bottom:2px" id="fs">Болдбаатар</div>
+            <div style="color:#2563eb;font-size:7.5px;font-weight:500">Нэр Given name</div>
+            <div style="font-weight:700;margin-bottom:2px" id="fg">БОЛД</div>
+            <div style="color:#2563eb;font-size:7.5px;font-weight:500">Хүйс Sex</div>
+            <div style="font-weight:700;margin-bottom:2px" id="fx">Эрэгтэй</div>
+            <div style="color:#2563eb;font-size:7.5px;font-weight:500">Төрсөн он, сар өдөр</div>
+            <div style="font-weight:700;margin-bottom:2px" id="fd">1995/05/15</div>
+            <div style="color:#2563eb;font-size:7.5px;font-weight:500">Иргэний бүртгэлийн дугаар</div>
+            <div style="font-weight:700" id="fr">УБ95051512</div>
+          </div>
+          <!-- decorative column like real card -->
+          <div style="width:22px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;opacity:.55">
+            <div style="width:14px;height:3px;background:#1e40af;border-radius:1px"></div>
+            <div style="width:14px;height:3px;background:#1e40af;border-radius:1px"></div>
+            <div style="width:14px;height:3px;background:#1e40af;border-radius:1px"></div>
+            <div style="width:14px;height:3px;background:#1e40af;border-radius:1px"></div>
+            <div style="width:14px;height:3px;background:#1e40af;border-radius:1px"></div>
+            <div style="width:14px;height:3px;background:#1e40af;border-radius:1px"></div>
+            <div style="width:14px;height:3px;background:#1e40af;border-radius:1px"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FRONT IMAGE (uploaded) -->
+      <img id="id-custom-front" alt="front" style="display:none;width:100%;border-radius:14px;vertical-align:top"/>
+
+      <!-- BACK TEMPLATE -->
+      <div id="idb" style="display:none;background:linear-gradient(165deg,#faf6ee,#f5ecd8);border-radius:14px;padding:14px;border:1px solid #e5d9c4;min-height:160px;position:relative">
+        <div style="font-size:10px;color:#3b82f6;margin-bottom:4px">Олгосон байгууллага</div>
+        <div style="font-size:13px;font-weight:700;color:#1e293b;margin-bottom:12px">Улсын Бүртгэлийн Ерөнхий Газар</div>
+        <div style="display:flex;gap:14px;align-items:flex-start">
+          <div style="width:48px;height:36px;border:2px solid #f59e0b;border-radius:6px;background:#fef3c7"></div>
+          <div style="font-size:11px">
+            <div style="color:#3b82f6;font-size:8px">Олгосон</div>
+            <div style="font-weight:700;margin-bottom:4px">2026/09/03</div>
+            <div style="color:#3b82f6;font-size:8px">Хүчинтэй</div>
+            <div style="font-weight:700">2035/08/10</div>
+          </div>
+        </div>
+        <div style="position:absolute;bottom:14px;right:16px;font-size:10px;color:#94a3b8;border:1px solid #cbd5e1;padding:2px 8px;border-radius:10px">MNG</div>
+      </div>
+
+      <!-- BACK IMAGE (uploaded) -->
+      <img id="id-custom-back" alt="back" style="display:none;width:100%;border-radius:14px;vertical-align:top"/>
+    </div>
+
+    <button class="bp" onclick="toast('Лавлагаа илгээгдлээ')" style="width:100%;margin-top:12px;padding:13px;border-radius:24px;font-size:15px;font-weight:600;border:none;background:#2563eb;color:#fff">Лавлагаа авах</button>
+    <button class="bp2" onclick="toast('Дахин захиалга илгээгдлээ')" style="width:100%;margin-top:8px;padding:13px;border-radius:24px;font-size:15px;font-weight:600;border:none;background:#eff6ff;color:#2563eb">Дахин захиалах</button>
+    <button class="bx" onclick="closeId()" style="width:100%;margin-top:6px;padding:10px;border:none;background:transparent;color:#94a3b8;font-size:14px">Хаах</button>
+  </div>
+</div>
+
+
+
+</body>
+</html>
